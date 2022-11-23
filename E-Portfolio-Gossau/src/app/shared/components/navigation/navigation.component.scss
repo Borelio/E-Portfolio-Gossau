@@ -1,0 +1,12 @@
+@import "colors";
+
+:host {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+h1 {
+  color: $PRIMARY-COLOR;
+  margin: 20px;
+}
