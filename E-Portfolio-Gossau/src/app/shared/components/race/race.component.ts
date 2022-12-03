@@ -1,5 +1,13 @@
+import {
+  animate,
+  keyframes,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Car } from '../../models/car';
+import { Explosion } from '../../models/explosion';
 import { KeyBoard } from '../../models/keyBoard';
 import { CarColor } from './../../models/car';
 
@@ -7,15 +15,27 @@ import { CarColor } from './../../models/car';
   selector: 'app-race',
   templateUrl: './race.component.html',
   styleUrls: ['./race.component.scss'],
+  animations: [
+    trigger('explosionAnimation', [
+      transition(':enter', [
+        style({ height: 0 }),
+        animate(
+          '800ms ease-out',
+          keyframes([style({ height: '*', offset: 1 })])
+        ),
+      ]),
+    ]),
+  ],
 })
 export class RaceComponent implements OnInit {
   carColors = CarColor;
   cars: Car[] = [
-    new Car(CarColor.red, 0, 24, 33, 30),
-    new Car(CarColor.green, 0, 24, 80, -30),
-    new Car(CarColor.yellow, 0, 65, 101, -105),
-    new Car(CarColor.blue, 0, 65, 17, 105),
+    new Car(CarColor.red),
+    new Car(CarColor.blue),
+    new Car(CarColor.green),
+    new Car(CarColor.yellow),
   ];
+  explosions: Explosion[] = [];
   keyBoard: KeyBoard = new KeyBoard();
   maxSpeed = 50;
 
@@ -80,31 +100,40 @@ export class RaceComponent implements OnInit {
   refreshView() {
     let car = this.cars.find((car) => car.color === CarColor.blue)!;
     this.doMovement(car);
+    this.detectCrash(car);
   }
 
   doMovement(car: Car) {
+    if (car.isDestroyed) {
+      return;
+    }
+
     if (this.keyBoard.up) {
       if (car.speed < this.maxSpeed) {
         car.speed += 1;
       }
     } else {
       if (car.speed > 0) {
-        car.speed -= 1;
+        car.speed -= 2;
       }
     }
 
     if (this.keyBoard.down) {
-      if (car.speed > 0) {
+      if (car.speed > (this.maxSpeed / 4) * -1) {
         car.speed -= 1;
+      }
+    } else {
+      if (car.speed < 0) {
+        car.speed += 1;
       }
     }
 
     if (this.keyBoard.right) {
-      car.angle += 10;
+      car.angle += car.speed / 3;
     }
 
     if (this.keyBoard.left) {
-      car.angle -= 10;
+      car.angle -= car.speed / 3;
     }
 
     let x = car.speed * Math.cos((car.angle * Math.PI) / 180);
@@ -112,5 +141,48 @@ export class RaceComponent implements OnInit {
 
     car.postionTop += y;
     car.postionRight -= x;
+  }
+
+  detectCrash(myCar: Car) {
+    let crashedCar: Car | null = null;
+
+    if (myCar.isDestroyed) {
+      return;
+    }
+
+    this.cars
+      .filter((x) => x !== myCar)
+      .forEach((otherCar) => {
+        let x = myCar.postionRight - otherCar.postionRight;
+        let y = myCar.postionTop - otherCar.postionTop;
+        let distance = Math.sqrt(x * x + y * y);
+        if (distance < 30) {
+          crashedCar = otherCar;
+        }
+      });
+
+    if (crashedCar) {
+      this.makeCrash(myCar);
+    }
+  }
+
+  makeCrash(car: Car) {
+    car.speed = 0;
+    car.isDestroyed = true;
+
+    this.explosions.push(new Explosion(car.postionTop, car.postionRight, car));
+
+    setTimeout(() => {
+      this.explosions = this.explosions.filter((x) => x.car !== car);
+      this.resetCar(car);
+    }, 1500);
+  }
+
+  resetCar(car: Car) {
+    let newCar = new Car(car.color);
+    car.postionTop = newCar.postionTop;
+    car.postionRight = newCar.postionRight;
+    car.angle = newCar.angle;
+    car.isDestroyed = false;
   }
 }
