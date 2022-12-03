@@ -18,10 +18,19 @@ import { CarColor } from './../../models/car';
   animations: [
     trigger('explosionAnimation', [
       transition(':enter', [
-        style({ height: 0 }),
+        style({ height: 0, transform: 'rotate(0deg)' }),
         animate(
           '800ms ease-out',
-          keyframes([style({ height: '*', offset: 1 })])
+          keyframes([
+            style({ height: '*', transform: 'rotate(-360deg)', offset: 1 }),
+          ])
+        ),
+      ]),
+      transition(':leave', [
+        style({ height: '*' }),
+        animate(
+          '800ms ease-out',
+          keyframes([style({ height: '0', offset: 0.5 })])
         ),
       ]),
     ]),
