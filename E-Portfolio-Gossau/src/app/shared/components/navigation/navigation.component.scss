@@ -14,6 +14,7 @@ h1 {
   margin: 20px;
   margin-left: auto;
   height: 100px;
+  cursor: pointer;
 
   &.race-started {
     ::ng-deep {
