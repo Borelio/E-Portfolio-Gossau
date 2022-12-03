@@ -172,6 +172,9 @@ export class RaceComponent implements OnInit {
 
     this.explosions.push(new Explosion(car.postionTop, car.postionRight, car));
 
+    var kaboomSound = new Audio('/assets/sounds/kaboom.mp3');
+    kaboomSound.play();
+
     setTimeout(() => {
       this.explosions = this.explosions.filter((x) => x.car !== car);
       this.resetCar(car);
