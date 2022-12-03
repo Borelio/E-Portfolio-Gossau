@@ -159,6 +159,30 @@ export class RaceComponent implements OnInit {
       return;
     }
 
+    if (myCar.postionTop < 0) {
+      myCar.postionTop = 0;
+      this.makeCrash(myCar);
+      return;
+    }
+
+    if (myCar.postionTop > window.innerHeight - 10) {
+      myCar.postionTop = window.innerHeight - 10;
+      this.makeCrash(myCar);
+      return;
+    }
+
+    if (myCar.postionRight < 0) {
+      myCar.postionRight = 0;
+      this.makeCrash(myCar);
+      return;
+    }
+
+    if (myCar.postionRight > window.innerWidth - 10) {
+      myCar.postionRight = window.innerWidth - 10;
+      this.makeCrash(myCar);
+      return;
+    }
+
     this.cars
       .filter((x) => x !== myCar)
       .forEach((otherCar) => {
