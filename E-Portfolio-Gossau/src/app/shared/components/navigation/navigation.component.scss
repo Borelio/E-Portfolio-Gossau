@@ -1,17 +1,25 @@
 @import "colors";
 :host {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 h1 {
-    color: $PRIMARY-COLOR;
-    margin: 20px;
+  color: $PRIMARY-COLOR;
+  margin: 20px;
 }
 
 .logo {
-    margin: 20px;
-    margin-left: auto;
-    height: 100px;
+  margin: 20px;
+  margin-left: auto;
+  height: 100px;
+
+  &.race-started {
+    ::ng-deep {
+      .car {
+        display: none;
+      }
+    }
+  }
 }

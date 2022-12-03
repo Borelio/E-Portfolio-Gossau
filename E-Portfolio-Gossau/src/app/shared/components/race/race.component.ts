@@ -1,17 +1,23 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Car } from '../../models/car';
 import { KeyBoard } from '../../models/keyBoard';
+import { CarColor } from './../../models/car';
 
 @Component({
   selector: 'app-race',
   templateUrl: './race.component.html',
-  styleUrls: ['./race.component.scss']
+  styleUrls: ['./race.component.scss'],
 })
 export class RaceComponent implements OnInit {
-  @ViewChild('racefield') canvas!: ElementRef;
-  canvasContext!: CanvasRenderingContext2D;
-  cars: Car[] = [new Car('red', 12, 100, 100, 90)];
+  carColors = CarColor;
+  cars: Car[] = [
+    new Car(CarColor.red, 0, 24, 33, 30),
+    new Car(CarColor.green, 0, 24, 80, -30),
+    new Car(CarColor.yellow, 0, 65, 101, -105),
+    new Car(CarColor.blue, 0, 65, 17, 105),
+  ];
   keyBoard: KeyBoard = new KeyBoard();
+  maxSpeed = 50;
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
@@ -63,24 +69,48 @@ export class RaceComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
-    this.canvasContext = this.canvas.nativeElement.getContext("2d");
-    setInterval(() => this.refreshView(), 10);
+    setInterval(() => this.refreshView(), 100);
   }
 
   refreshView() {
-    let base_image = new Image();
-    let context = this.canvasContext;
-    var img = new Image();
-    img.onload = function () {
-      context.drawImage(img, 0, 0);
+    let car = this.cars.find((car) => car.color === CarColor.blue)!;
+    this.doMovement(car);
+  }
+
+  doMovement(car: Car) {
+    if (this.keyBoard.up) {
+      if (car.speed < this.maxSpeed) {
+        car.speed += 1;
+      }
+    } else {
+      if (car.speed > 0) {
+        car.speed -= 1;
+      }
     }
-    img.src = "http://upload.wikimedia.org/wikipedia/commons/d/d2/Svg_example_square.svg";
+
+    if (this.keyBoard.down) {
+      if (car.speed > 0) {
+        car.speed -= 1;
+      }
+    }
+
+    if (this.keyBoard.right) {
+      car.angle += 10;
+    }
+
+    if (this.keyBoard.left) {
+      car.angle -= 10;
+    }
+
+    let x = car.speed * Math.cos((car.angle * Math.PI) / 180);
+    let y = car.speed * Math.sin((car.angle * Math.PI) / 180);
+
+    car.postionTop += y;
+    car.postionRight -= x;
   }
 }

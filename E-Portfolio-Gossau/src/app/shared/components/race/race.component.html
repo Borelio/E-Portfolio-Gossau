@@ -1,1 +1,5 @@
-<canvas #racefield id="race-field"></canvas>
+<!-- <canvas #racefield id="race-field"></canvas> -->
+<svg-icon class="car" *ngFor="let car of cars" [src]="'/assets/images/car-' + car.color + '.svg'"
+  [ngClass]="{red: car.color === carColors.red, blue: car.color === carColors.blue, green: car.color === carColors.green, yellow: car.color === carColors.yellow}"
+  [ngStyle]="{top: car.postionTop + 'px', right: car.postionRight + 'px', transform: 'rotate(' + car.angle + 'deg)'}">
+</svg-icon>
