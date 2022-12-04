@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
 
 server.listen(3000, () => {
     console.log('listening on *:3000');
-    setInterval(updateAllCars, 5000);
+    setTimeout(updateAllCars, 5000);
 });
 
 function newPlayer(playerId) {
@@ -92,6 +92,8 @@ function updateAllCars() {
             });
         }
     });
+
+    setTimeout(updateAllCars, 5000);
 }
 
 function round(value, decimals) {
