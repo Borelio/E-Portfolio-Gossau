@@ -52,6 +52,7 @@ server.listen(3000, () => {
 });
 
 setInterval(() => {
+    console.log('intervall');
     let socketIds = cars.map(car => car.playerId);
     cars.forEach(car => {
         if (car.positionTop !== 0 && car.angle !== 0) {
