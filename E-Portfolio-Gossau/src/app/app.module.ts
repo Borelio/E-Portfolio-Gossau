@@ -9,8 +9,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PicturesComponent } from './pages/pictures/pictures.component';
 import { VideosComponent } from './pages/videos/videos.component';
-import { NavigationComponent } from './shared/components/navigation/navigation.component';
 import { IconComponent } from './shared/components/icon/icon.component';
+import { NavigationComponent } from './shared/components/navigation/navigation.component';
 import { RaceComponent } from './shared/components/race/race.component';
 
 @NgModule({

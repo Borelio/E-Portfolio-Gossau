@@ -6,6 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, HostListener, OnInit } from '@angular/core';
+import { io, Socket } from 'socket.io-client';
 import { Car } from '../../models/car';
 import { Explosion } from '../../models/explosion';
 import { KeyBoard } from '../../models/keyBoard';
@@ -37,6 +38,9 @@ import { CarColor } from './../../models/car';
   ],
 })
 export class RaceComponent implements OnInit {
+  socket: Socket = io('ws://localhost:3000', {
+    reconnectionDelayMax: 10000,
+  });
   carColors = CarColor;
   cars: Car[] = [
     new Car(CarColor.red),
@@ -103,7 +107,7 @@ export class RaceComponent implements OnInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    setInterval(() => this.refreshView(), 100);
+    setInterval(async () => this.refreshView(), 100);
   }
 
   refreshView() {
@@ -113,6 +117,10 @@ export class RaceComponent implements OnInit {
   }
 
   doMovement(car: Car) {
+    let positionTopBevore = car.postionTop;
+    let positionRightBevore = car.postionRight;
+    let angleBevore = car.angle;
+
     if (car.isDestroyed) {
       return;
     }
@@ -150,6 +158,17 @@ export class RaceComponent implements OnInit {
 
     car.postionTop += y;
     car.postionRight -= x;
+
+    if (
+      positionTopBevore !== car.postionTop ||
+      positionRightBevore !== car.postionRight ||
+      angleBevore !== car.angle
+    ) {
+      this.socket.emit(
+        'p',
+        `${car.postionTop}:${car.postionRight}:${car.angle}`
+      );
+    }
   }
 
   detectCrash(myCar: Car) {
