@@ -53,12 +53,17 @@ server.listen(3000, () => {
 });
 
 async function buildIntervall() {
+    console.log('Dedbug2');
     while (true) {
+        console.log('Dedbug3');
         await sleep(5000);
+        console.log('Dedbug4');
         updateAllCars();
+        console.log('Dedbug5');
     }
 }
 buildIntervall();
+console.log('Dedbug1');
 
 function newPlayer(playerId) {
     if (cars.find(car => car.playerId === playerId)) {
