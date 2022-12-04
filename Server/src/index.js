@@ -53,10 +53,12 @@ server.listen(3000, () => {
 
 setInterval(() => {
     let socketIds = cars.map(car => car.playerId);
-    cars.filter(x => x.postionTop !== 0).forEach(car => {
-        socketIds.filter(x => car.playerId !== x).forEach(socketId => {
-            io.to(socketId).emit(car.color[0], `${round(car.postionTop, 2)}:${round(car.positionRight, 2)}:${round(car.angle, 2)}`);
-        });
+    cars.forEach(car => {
+        if (car.positionTop !== 0 && car.angle !== 0) {
+            socketIds.filter(x => car.playerId !== x).forEach(socketId => {
+                io.to(socketId).emit(car.color[0], `${round(car.postionTop, 2)}:${round(car.positionRight, 2)}:${round(car.angle, 2)}`);
+            });
+        }
     });
 }, 5000);
 
