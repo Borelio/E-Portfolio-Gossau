@@ -50,7 +50,7 @@ server.listen(3000, () => {
 
 setInterval(() => {
     let socketIds = cars.map(car => car.playerId);
-    cars.filter(x => x.postionTop !== 0 || x.angle !== 0).forEach(car => {
+    cars.filter(x => x.postionTop !== 0).forEach(car => {
         socketIds.filter(x => car.playerId !== x).forEach(socketId => {
             io.to(socketId).emit(car.color[0], `${round(car.postionTop, 2)}:${round(car.positionRight, 2)}:${round(car.angle, 2)}`);
         });
@@ -77,7 +77,6 @@ function newPlayer(playerId) {
 
 function playerDisconnected(playerId) {
     let car = cars.find(c => c.playerId == playerId);
-    cars = cars.filter(car => car.playerId !== playerId);
 
     if (car) {
         io.emit('deleteCar', car.color);
