@@ -73,6 +73,7 @@ export class RaceComponent implements OnInit {
         break;
       case ' ':
         this.keyBoard.space = true;
+        this.honk();
         break;
     }
   }
@@ -111,6 +112,10 @@ export class RaceComponent implements OnInit {
       if (playerId === this.socket!.id) {
         this.myCar = this.cars.find((car) => car.color === color)!;
       }
+    });
+
+    this.socket.on('honk', () => {
+      this.playHonkSound();
     });
   }
 
@@ -294,5 +299,15 @@ export class RaceComponent implements OnInit {
         2
       )}:${this.round(car.angle, 2)}`
     );
+  }
+
+  honk() {
+    this.socket?.emit('honk');
+    this.playHonkSound();
+  }
+
+  playHonkSound() {
+    var honkSound = new Audio('/assets/sounds/pinguHonk.mp3');
+    honkSound.play();
   }
 }

@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const { Car } = require('./car');
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:4200",
+        origin: "*",
         methods: ["GET", "POST"]
     }
 });
@@ -25,6 +25,10 @@ io.on('connection', (socket) => {
 
     socket.on('p', (msg) => {
         socket.broadcast.emit(posiontCode, msg);
+    });
+
+    socket.on('honk', () => {
+        socket.broadcast.emit('honk');
     });
 });
 
