@@ -30,6 +30,10 @@ io.on('connection', (socket) => {
     socket.on('honk', () => {
         socket.broadcast.emit('honk');
     });
+
+    socket.on('crash', (msg) => {
+        socket.broadcast.emit('crash', msg);
+    });
 });
 
 server.listen(3000, () => {

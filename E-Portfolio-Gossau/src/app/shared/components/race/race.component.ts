@@ -8,9 +8,9 @@ import {
 import { Component, HostListener, OnInit } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Car } from '../../models/car';
-import { Explosion } from '../../models/explosion';
 import { KeyBoard } from '../../models/keyBoard';
 import { CarColor } from './../../models/car';
+import { Explosion } from './../../models/explosion';
 
 @Component({
   selector: 'app-race',
@@ -106,7 +106,7 @@ export class RaceComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.socket = io('ws://localhost:3000');
+    this.socket = io('wss://gossau-be.nussmueller.dev');
 
     this.socket.on('playercarmap', (playerId: string, color: CarColor) => {
       if (playerId === this.socket!.id) {
@@ -116,6 +116,14 @@ export class RaceComponent implements OnInit {
 
     this.socket.on('honk', () => {
       this.playHonkSound();
+    });
+
+    this.socket.on('crash', (data: string) => {
+      let dataSplit = data.split(':');
+      let positionTop = Number(dataSplit[0]);
+      let positionRight = Number(dataSplit[1]);
+
+      this.crashAnimation(positionTop, positionRight);
     });
   }
 
@@ -266,15 +274,22 @@ export class RaceComponent implements OnInit {
     car.isDestroyed = true;
 
     this.emitMovement(car);
+    this.crashAnimation(car.postionTop, car.postionRight);
 
-    this.explosions.push(new Explosion(car.postionTop, car.postionRight, car));
+    setTimeout(() => {
+      this.resetCar(car);
+    }, 1500);
+  }
+
+  crashAnimation(positionTop: number, positionRight: number) {
+    let explosion = new Explosion(positionTop, positionRight);
+    this.explosions.push(explosion);
 
     var kaboomSound = new Audio('/assets/sounds/kaboom.mp3');
     kaboomSound.play();
 
     setTimeout(() => {
-      this.explosions = this.explosions.filter((x) => x.car !== car);
-      this.resetCar(car);
+      this.explosions = this.explosions.filter((x) => x !== explosion);
     }, 1500);
   }
 
