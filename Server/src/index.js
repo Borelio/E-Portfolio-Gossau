@@ -77,7 +77,7 @@ function newPlayer(playerId) {
             io.emit('playercarmap', playerId, color);
         }, 500);
     } else {
-        console.log('No more cars available');
+        console.log('No more cars available', cars.length, possibleColors.length);
     }
 }
 
