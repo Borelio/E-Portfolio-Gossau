@@ -17,7 +17,7 @@ let cars = [];
 io.on('connection', (socket) => {
     newPlayer(socket.id);
     let car = cars.find(car => car.playerId === socket.id);
-    let posiontCode = car.color[0];
+    let posiontCode = car?.color[0];
 
     socket.on('disconnect', () => {
         playerDisconnected(socket.id);
@@ -37,6 +37,10 @@ io.on('connection', (socket) => {
 
     socket.on('requestcar', () => {
         newPlayer(socket.id);
+        let newCar = cars.find(car => car.playerId === socket.id);
+        if (newCar) {
+            posiontCode = newCar.color[0];
+        }
     });
 });
 
