@@ -51,7 +51,7 @@ server.listen(3000, () => {
 setInterval(() => {
     let socketIds = cars.map(car => car.playerId);
     cars.forEach(car => {
-        socketIds.filter(x => car.playerId !== x).foreach(socketId => {
+        socketIds.filter(x => car.playerId !== x).forEach(socketId => {
             io.to(socketId).emit(car.color[0], `${round(car.postionTop, 2)}:${round(car.positionRight, 2)}:${round(car.angle, 2)}`);
         });
     });
