@@ -64,6 +64,7 @@ function newPlayer(playerId) {
     if (cars.find(car => car.playerId === playerId)) {
         let color = cars.find(car => car.playerId === playerId).color;
         io.emit('playercarmap', playerId, color);
+        console.log('stupid');
         return;
     }
 
@@ -75,6 +76,8 @@ function newPlayer(playerId) {
         setTimeout(() => {
             io.emit('playercarmap', playerId, color);
         }, 500);
+    } else {
+        console.log('No more cars available');
     }
 }
 
