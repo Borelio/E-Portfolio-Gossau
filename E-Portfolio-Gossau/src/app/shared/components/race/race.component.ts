@@ -38,9 +38,7 @@ import { CarColor } from './../../models/car';
   ],
 })
 export class RaceComponent implements OnInit {
-  socket: Socket = io('ws://localhost:3000', {
-    reconnectionDelayMax: 10000,
-  });
+  socket: Socket | undefined;
   carColors = CarColor;
   cars: Car[] = [
     new Car(CarColor.red),
@@ -48,6 +46,8 @@ export class RaceComponent implements OnInit {
     new Car(CarColor.green),
     new Car(CarColor.yellow),
   ];
+  myCar: Car | undefined;
+  startedMovingOtherCras: boolean = false;
   explosions: Explosion[] = [];
   keyBoard: KeyBoard = new KeyBoard();
   maxSpeed = 50;
@@ -104,16 +104,52 @@ export class RaceComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.socket = io('ws://localhost:3000');
+
+    this.socket.on('playercarmap', (playerId: string, color: CarColor) => {
+      if (playerId === this.socket!.id) {
+        this.myCar = this.cars.find((car) => car.color === color)!;
+      }
+    });
+  }
 
   ngAfterViewInit() {
     setInterval(async () => this.refreshView(), 100);
   }
 
+  moveOtherCars() {
+    this.startedMovingOtherCras = true;
+
+    let colors: CarColor[] = [
+      CarColor.red,
+      CarColor.green,
+      CarColor.blue,
+      CarColor.yellow,
+    ];
+
+    colors = colors.filter((color) => color !== this.myCar!.color);
+
+    colors.forEach((color) => {
+      let car = this.cars.find((car) => car.color === color)!;
+      let posiontCode = color[0];
+
+      this.socket!.on(posiontCode, (data: string) => {
+        let dataSplit = data.split(':');
+        car.postionTop = Number(dataSplit[0]);
+        car.postionRight = Number(dataSplit[1]);
+        car.angle = Number(dataSplit[2]);
+      });
+    });
+  }
+
   refreshView() {
-    let car = this.cars.find((car) => car.color === CarColor.blue)!;
-    this.doMovement(car);
-    this.detectCrash(car);
+    if (!this.startedMovingOtherCras && this.myCar) {
+      this.moveOtherCars();
+    }
+
+    this.doMovement(this.myCar!);
+    this.detectCrash(this.myCar!);
   }
 
   doMovement(car: Car) {
@@ -122,6 +158,11 @@ export class RaceComponent implements OnInit {
     let angleBevore = car.angle;
 
     if (car.isDestroyed) {
+      return;
+    }
+
+    if (this.keyBoard.up && this.keyBoard.down) {
+      this.makeCrash(car);
       return;
     }
 
@@ -164,13 +205,7 @@ export class RaceComponent implements OnInit {
       positionRightBevore !== car.postionRight ||
       angleBevore !== car.angle
     ) {
-      this.socket.emit(
-        'p',
-        `${this.round(car.postionTop, 2)}:${this.round(
-          car.postionRight,
-          2
-        )}:${this.round(car.angle, 2)}`
-      );
+      this.emitMovement(car);
     }
   }
 
@@ -225,6 +260,8 @@ export class RaceComponent implements OnInit {
     car.speed = 0;
     car.isDestroyed = true;
 
+    this.emitMovement(car);
+
     this.explosions.push(new Explosion(car.postionTop, car.postionRight, car));
 
     var kaboomSound = new Audio('/assets/sounds/kaboom.mp3');
@@ -242,9 +279,20 @@ export class RaceComponent implements OnInit {
     car.postionRight = newCar.postionRight;
     car.angle = newCar.angle;
     car.isDestroyed = false;
+    this.emitMovement(car);
   }
 
   round(value: number, decimals: number) {
     return Number(Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals);
+  }
+
+  emitMovement(car: Car) {
+    this.socket!.emit(
+      'p',
+      `${this.round(car.postionTop, 2)}:${this.round(
+        car.postionRight,
+        2
+      )}:${this.round(car.angle, 2)}`
+    );
   }
 }

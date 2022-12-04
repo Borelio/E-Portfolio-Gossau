@@ -11,7 +11,7 @@ const io = new Server(server, {
     }
 });
 
-let possibleColors = ['red', 'blue', 'green', 'yellow'];
+let possibleColors = ['blue', 'yellow', 'green', 'red'];
 let cars = [];
 
 io.on('connection', (socket) => {
@@ -20,7 +20,6 @@ io.on('connection', (socket) => {
     let posiontCode = car.color[0];
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
         playerDisconnected(socket.id);
     });
 
@@ -40,7 +39,7 @@ function newPlayer(playerId) {
         cars.push(car);
 
         setTimeout(() => {
-            io.emit('playercarmap', playerId, color[0]);
+            io.emit('playercarmap', playerId, color);
         }, 500);
     }
 }
