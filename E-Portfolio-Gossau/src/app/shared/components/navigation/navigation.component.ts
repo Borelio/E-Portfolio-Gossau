@@ -1,17 +1,15 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
 })
-export class NavigationComponent {
-  raceStarted = false;
-
-  @HostListener('window:keydown', ['$event'])
-  handleKeyDown(event: KeyboardEvent) {
-    if (event.key === ' ') {
+export class NavigationComponent implements OnInit {
+  raceStarted: boolean = false;
+  ngOnInit(): void {
+    setTimeout(() => {
       this.raceStarted = true;
-    }
+    }, 1000);
   }
 }
