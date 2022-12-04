@@ -53,18 +53,12 @@ server.listen(3000, () => {
 });
 
 async function buildIntervall() {
-    console.log('Dedbug2');
     while (true) {
-        console.log('Dedbug3');
         await sleep(5000);
-        console.log('Dedbug4');
         updateAllCars();
-        console.log('Dedbug5');
     }
 }
 buildIntervall();
-updateAllCars();
-console.log('Dedbug1');
 
 function newPlayer(playerId) {
     if (cars.find(car => car.playerId === playerId)) {
@@ -102,6 +96,7 @@ function updateAllCars() {
     cars.forEach(car => {
         if (car.positionTop !== 0 && car.angle !== 0) {
             socketIds.filter(x => car.playerId !== x).forEach(socketId => {
+                console.log('sending to ' + socketId);
                 io.to(socketId).emit(car.color[0], `${round(car.postionTop, 2)}:${round(car.positionRight, 2)}:${round(car.angle, 2)}`);
             });
         }
