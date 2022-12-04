@@ -44,6 +44,15 @@ server.listen(3000, () => {
     console.log('listening on *:3000');
 });
 
+setInterval(() => {
+    let socketIds = cars.map(car => car.playerId);
+    cars.forEach(car => {
+        socketIds.filter(x => car.playerId !== x).foreach(socketId => {
+            io.to(socketId).emit(car.color[0], `${round(car.postionTop, 2)}:${round(car.positionRight, 2)}:${round(car.angle, 2)}`);
+        });
+    });
+}, 5000);
+
 function newPlayer(playerId) {
     if (cars.find(car => car.playerId === playerId)) {
         let color = cars.find(car => car.playerId === playerId).color;
@@ -67,4 +76,8 @@ function playerDisconnected(playerId) {
     cars = cars.filter(car => car.playerId !== playerId);
 
     io.emit('deleteCar', car.color);
+}
+
+function round(value, decimals) {
+    return Number(Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals);
 }

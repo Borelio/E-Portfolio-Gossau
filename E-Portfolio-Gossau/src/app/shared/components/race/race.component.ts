@@ -159,17 +159,17 @@ export class RaceComponent implements OnInit, OnDestroy {
       CarColor.yellow,
     ];
 
-    colors = colors.filter((color) => color !== this.myCar!.color);
-
     colors.forEach((color) => {
       let car = this.cars.find((car) => car.color === color)!;
       let posiontCode = color[0];
 
       this.socket!.on(posiontCode, (data: string) => {
-        let dataSplit = data.split(':');
-        car.postionTop = Number(dataSplit[0]);
-        car.postionRight = Number(dataSplit[1]);
-        car.angle = Number(dataSplit[2]);
+        if (this.myCar?.color[0] !== posiontCode) {
+          let dataSplit = data.split(':');
+          car.postionTop = Number(dataSplit[0]);
+          car.postionRight = Number(dataSplit[1]);
+          car.angle = Number(dataSplit[2]);
+        }
       });
     });
   }
