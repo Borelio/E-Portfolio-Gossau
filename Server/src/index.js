@@ -40,6 +40,9 @@ io.on('connection', (socket) => {
         let newCar = cars.find(car => car.playerId === socket.id);
         if (newCar) {
             posiontCode = newCar.color[0];
+            console.log('New Car: ' + newCar.color);
+        } else {
+            console.log('No new car found');
         }
     });
 });
