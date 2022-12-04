@@ -166,7 +166,10 @@ export class RaceComponent implements OnInit {
     ) {
       this.socket.emit(
         'p',
-        `${car.postionTop}:${car.postionRight}:${car.angle}`
+        `${this.round(car.postionTop, 2)}:${this.round(
+          car.postionRight,
+          2
+        )}:${this.round(car.angle, 2)}`
       );
     }
   }
@@ -239,5 +242,9 @@ export class RaceComponent implements OnInit {
     car.postionRight = newCar.postionRight;
     car.angle = newCar.angle;
     car.isDestroyed = false;
+  }
+
+  round(value: number, decimals: number) {
+    return Number(Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals);
   }
 }
