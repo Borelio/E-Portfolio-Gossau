@@ -34,6 +34,10 @@ io.on('connection', (socket) => {
     socket.on('crash', (msg) => {
         socket.broadcast.emit('crash', msg);
     });
+
+    socket.on('requestcar', () => {
+        newPlayer(socket.id);
+    });
 });
 
 server.listen(3000, () => {
@@ -41,6 +45,12 @@ server.listen(3000, () => {
 });
 
 function newPlayer(playerId) {
+    if (cars.find(car => car.playerId === playerId)) {
+        let color = cars.find(car => car.playerId === playerId).color;
+        io.emit('playercarmap', playerId, color);
+        return;
+    }
+
     if (cars.length < possibleColors.length) {
         let color = possibleColors.find(color => !cars.find(car => car.color === color));
         let car = new Car(playerId, color, 0, 0, 0);

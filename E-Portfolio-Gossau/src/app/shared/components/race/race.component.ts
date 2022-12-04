@@ -5,7 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Car } from '../../models/car';
 import { KeyBoard } from '../../models/keyBoard';
@@ -37,7 +37,7 @@ import { Explosion } from './../../models/explosion';
     ]),
   ],
 })
-export class RaceComponent implements OnInit {
+export class RaceComponent implements OnInit, OnDestroy {
   socket: Socket | undefined;
   carColors = CarColor;
   cars: Car[] = [
@@ -48,6 +48,8 @@ export class RaceComponent implements OnInit {
   ];
   myCar: Car | undefined;
   startedMovingOtherCras: boolean = false;
+  refreshIntervall: NodeJS.Timer | undefined;
+  requestCarIntervall: NodeJS.Timer | undefined;
   explosions: Explosion[] = [];
   keyBoard: KeyBoard = new KeyBoard();
   maxSpeed = 50;
@@ -111,7 +113,13 @@ export class RaceComponent implements OnInit {
     this.socket.on('playercarmap', (playerId: string, color: CarColor) => {
       if (playerId === this.socket!.id) {
         this.myCar = this.cars.find((car) => car.color === color)!;
+        clearInterval(this.requestCarIntervall);
       }
+    });
+
+    this.socket.on('deleteCar', (color: string) => {
+      let car = this.cars.find((car) => car.color === color);
+      this.resetCar(car!);
     });
 
     this.socket.on('honk', () => {
@@ -125,10 +133,20 @@ export class RaceComponent implements OnInit {
 
       this.crashAnimation(positionTop, positionRight);
     });
+
+    this.requestCarIntervall = setInterval(() => {
+      console.log('request car');
+      this.socket?.emit('requestcar');
+    }, 5000);
   }
 
   ngAfterViewInit() {
     setInterval(async () => this.refreshView(), 100);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.refreshIntervall);
+    clearInterval(this.requestCarIntervall);
   }
 
   moveOtherCars() {
@@ -161,8 +179,10 @@ export class RaceComponent implements OnInit {
       this.moveOtherCars();
     }
 
-    this.doMovement(this.myCar!);
-    this.detectCrash(this.myCar!);
+    if (this.startedMovingOtherCras) {
+      this.doMovement(this.myCar!);
+      this.detectCrash(this.myCar!);
+    }
   }
 
   doMovement(car: Car) {
@@ -275,6 +295,10 @@ export class RaceComponent implements OnInit {
 
     this.emitMovement(car);
     this.crashAnimation(car.postionTop, car.postionRight);
+    this.socket?.emit(
+      'crash',
+      `${this.round(car.postionTop, 2)}:${this.round(car.postionRight, 2)}`
+    );
 
     setTimeout(() => {
       this.resetCar(car);
@@ -299,7 +323,10 @@ export class RaceComponent implements OnInit {
     car.postionRight = newCar.postionRight;
     car.angle = newCar.angle;
     car.isDestroyed = false;
-    this.emitMovement(car);
+
+    if (car === this.myCar) {
+      this.emitMovement(car);
+    }
   }
 
   round(value: number, decimals: number) {
