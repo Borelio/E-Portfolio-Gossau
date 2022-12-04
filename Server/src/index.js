@@ -91,6 +91,7 @@ function playerDisconnected(playerId) {
 }
 
 function updateAllCars() {
+    console.log('oijahbsdfoiugvzhbiuazgfcuzastfduztfuhz');
     cars.forEach(car => {
         if (car.positionTop !== 0 && car.angle !== 0) {
             io.emit(car.color[0], `${round(car.postionTop, 2)}:${round(car.positionRight, 2)}:${round(car.angle, 2)}`);
