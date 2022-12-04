@@ -4,7 +4,6 @@ const http = require('http');
 const server = http.Server(app);
 const { Server } = require("socket.io");
 const { Car } = require('./car');
-const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 const io = new Server(server, {
     cors: {
         origin: "*",
@@ -52,14 +51,6 @@ server.listen(3000, () => {
     console.log('listening on *:3000');
 });
 
-async function buildIntervall() {
-    while (true) {
-        await sleep(5000);
-        updateAllCars();
-    }
-}
-buildIntervall();
-
 function newPlayer(playerId) {
     if (cars.find(car => car.playerId === playerId)) {
         let color = cars.find(car => car.playerId === playerId).color;
@@ -88,15 +79,6 @@ function playerDisconnected(playerId) {
     if (car) {
         io.emit('deleteCar', car.color);
     }
-}
-
-function updateAllCars() {
-    console.log('oijahbsdfoiugvzhbiuazgfcuzastfduztfuhz');
-    cars.forEach(car => {
-        if (car.positionTop !== 0 && car.angle !== 0) {
-            io.emit(car.color[0], `${round(car.postionTop, 2)}:${round(car.positionRight, 2)}:${round(car.angle, 2)}`);
-        }
-    });
 }
 
 function round(value, decimals) {
