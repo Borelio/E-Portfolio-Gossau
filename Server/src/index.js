@@ -4,6 +4,7 @@ const http = require('http');
 const server = http.Server(app);
 const { Server } = require("socket.io");
 const { Car } = require('./car');
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 const io = new Server(server, {
     cors: {
         origin: "*",
@@ -49,8 +50,15 @@ io.on('connection', (socket) => {
 
 server.listen(3000, () => {
     console.log('listening on *:3000');
-    setTimeout(updateAllCars, 5000);
 });
+
+async function buildIntervall() {
+    while (true) {
+        await sleep(5000);
+        updateAllCars();
+    }
+}
+buildIntervall();
 
 function newPlayer(playerId) {
     if (cars.find(car => car.playerId === playerId)) {
