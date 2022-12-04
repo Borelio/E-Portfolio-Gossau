@@ -63,6 +63,7 @@ async function buildIntervall() {
     }
 }
 buildIntervall();
+updateAllCars();
 console.log('Dedbug1');
 
 function newPlayer(playerId) {
@@ -96,7 +97,7 @@ function playerDisconnected(playerId) {
 }
 
 function updateAllCars() {
-    console.log('intervall');
+    console.log('valisjkhdbfoiahsbdf');
     let socketIds = cars.map(car => car.playerId);
     cars.forEach(car => {
         if (car.positionTop !== 0 && car.angle !== 0) {
@@ -105,8 +106,6 @@ function updateAllCars() {
             });
         }
     });
-
-    setTimeout(updateAllCars, 5000);
 }
 
 function round(value, decimals) {
