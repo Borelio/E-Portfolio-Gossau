@@ -25,6 +25,7 @@ io.on('connection', (socket) => {
 
     socket.on('p', (msg) => {
         socket.broadcast.emit(posiontCode, msg);
+        car.lastMsg = msg;
     });
 
     socket.on('honk', () => {
@@ -50,6 +51,8 @@ io.on('connection', (socket) => {
 server.listen(3000, () => {
     console.log('listening on *:3000');
 });
+
+setInterval(brodcastAllCars, 5000);
 
 function newPlayer(playerId) {
     if (cars.find(car => car.playerId === playerId)) {
@@ -79,6 +82,21 @@ function playerDisconnected(playerId) {
     if (car) {
         io.emit('deleteCar', car.color);
     }
+}
+
+function brodcastAllCars() {
+    cars.forEach(car => {
+        let msgSplit = car.lastMsg.split(':');
+        let postionTop = msgSplit[0];
+        let positionRight = msgSplit[1];
+        let angle = msgSplit[2];
+
+        if (angle != 0 && postionTop != 0) {
+            io.emit(car.color[0], `${round(postionTop, 2)}:${round(positionRight, 2)}:${round(angle, 2)}`);
+        } else {
+            io.emit('resetcar', car.color[0]);
+        }
+    });
 }
 
 function round(value, decimals) {

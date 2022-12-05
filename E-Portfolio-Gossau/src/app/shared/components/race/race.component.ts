@@ -108,7 +108,8 @@ export class RaceComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    this.socket = io('wss://gossau-be.nussmueller.dev');
+    // this.socket = io('wss://gossau-be.nussmueller.dev');
+    this.socket = io('ws://localhost:3000');
 
     this.socket.on('playercarmap', (playerId: string, color: CarColor) => {
       if (playerId === this.socket!.id) {
@@ -171,6 +172,13 @@ export class RaceComponent implements OnInit, OnDestroy {
           car.angle = Number(dataSplit[2]);
         }
       });
+    });
+
+    this.socket!.on('resetcar', (posiontCode) => {
+      if (this.myCar?.color[0] !== posiontCode) {
+        let car = this.cars.find((car) => car.color[0] === posiontCode)!;
+        this.resetCar(car);
+      }
     });
   }
 

@@ -2,9 +2,7 @@ class Car {
     constructor(playerId, color, postionTop, positionRight, angle) {
         this.playerId = playerId;
         this.color = color;
-        this.postionTop = postionTop;
-        this.positionRight = positionRight;
-        this.angle = angle;
+        this.lastMsg = '0:0:0';
     }
 }
 
