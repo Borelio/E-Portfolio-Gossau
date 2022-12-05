@@ -5,7 +5,14 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Car } from '../../models/car';
 import { KeyBoard } from '../../models/keyBoard';
@@ -53,6 +60,9 @@ export class RaceComponent implements OnInit, OnDestroy {
   explosions: Explosion[] = [];
   keyBoard: KeyBoard = new KeyBoard();
   maxSpeed = 50;
+
+  @Output() socketConnected: EventEmitter<void> = new EventEmitter();
+  @Output() socketDisconnected: EventEmitter<void> = new EventEmitter();
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
@@ -108,8 +118,11 @@ export class RaceComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    // this.socket = io('wss://gossau-be.nussmueller.dev');
-    this.socket = io('ws://localhost:3000');
+    this.socket = io('wss://gossau-be.nussmueller.dev');
+    // this.socket = io('ws://localhost:3000');
+
+    this.socket.on('connect', () => this.socketConnected.emit());
+    this.socket.on('disconnect', () => this.socketDisconnected.emit());
 
     this.socket.on('playercarmap', (playerId: string, color: CarColor) => {
       if (playerId === this.socket!.id) {

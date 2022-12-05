@@ -9,4 +9,5 @@
 </a>
 
 <app-icon class="logo" [class.race-started]="raceStarted" [icon]="'logo'"></app-icon>
-<app-race></app-race>
+<app-race class="race" [class.race-started]="raceStarted" (socketConnected)="raceStarted = true"
+  (socketDisconnected)="raceStarted = false"></app-race>
