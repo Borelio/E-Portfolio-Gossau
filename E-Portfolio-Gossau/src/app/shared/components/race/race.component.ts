@@ -47,7 +47,7 @@ export class RaceComponent implements OnInit, OnDestroy {
     new Car(CarColor.yellow),
   ];
   myCar: Car | undefined;
-  startedMovingOtherCras: boolean = false;
+  startedMovingOtherCars: boolean = false;
   refreshIntervall: NodeJS.Timer | undefined;
   requestCarIntervall: NodeJS.Timer | undefined;
   explosions: Explosion[] = [];
@@ -150,8 +150,19 @@ export class RaceComponent implements OnInit, OnDestroy {
     clearInterval(this.requestCarIntervall);
   }
 
+  refreshView() {
+    if (!this.startedMovingOtherCars && this.socket?.connected) {
+      this.moveOtherCars();
+    }
+
+    if (this.startedMovingOtherCars && this.myCar) {
+      this.doMovement(this.myCar!);
+      this.detectCrash(this.myCar!);
+    }
+  }
+
   moveOtherCars() {
-    this.startedMovingOtherCras = true;
+    this.startedMovingOtherCars = true;
 
     let colors: CarColor[] = [
       CarColor.red,
@@ -165,7 +176,7 @@ export class RaceComponent implements OnInit, OnDestroy {
       let posiontCode = color[0];
 
       this.socket!.on(posiontCode, (data: string) => {
-        if (this.myCar?.color[0] !== posiontCode) {
+        if (!this.myCar || this.myCar?.color[0] !== posiontCode) {
           let dataSplit = data.split(':');
           car.postionTop = Number(dataSplit[0]);
           car.postionRight = Number(dataSplit[1]);
@@ -175,22 +186,11 @@ export class RaceComponent implements OnInit, OnDestroy {
     });
 
     this.socket!.on('resetcar', (posiontCode) => {
-      if (this.myCar?.color[0] !== posiontCode) {
+      if (!this.myCar || this.myCar?.color[0] !== posiontCode) {
         let car = this.cars.find((car) => car.color[0] === posiontCode)!;
         this.resetCar(car);
       }
     });
-  }
-
-  refreshView() {
-    if (!this.startedMovingOtherCras && this.myCar) {
-      this.moveOtherCars();
-    }
-
-    if (this.startedMovingOtherCras) {
-      this.doMovement(this.myCar!);
-      this.detectCrash(this.myCar!);
-    }
   }
 
   doMovement(car: Car) {
