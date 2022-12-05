@@ -59,7 +59,7 @@ export class RaceComponent implements OnInit, OnDestroy {
   requestCarIntervall: NodeJS.Timer | undefined;
   explosions: Explosion[] = [];
   keyBoard: KeyBoard = new KeyBoard();
-  maxSpeed = 50;
+  maxSpeed = 75;
 
   @Output() socketConnected: EventEmitter<void> = new EventEmitter();
   @Output() socketDisconnected: EventEmitter<void> = new EventEmitter();
