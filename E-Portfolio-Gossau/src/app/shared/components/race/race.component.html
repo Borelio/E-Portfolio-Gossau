@@ -1,5 +1,7 @@
-<svg-icon class="car" *ngFor="let car of cars" [src]="'assets/images/car-' + car.color + '.svg'" [ngClass]="{red: car.color === carColors.red, blue: car.color === carColors.blue, green: car.color === carColors.green, yellow: car.color === carColors.yellow}"
-    [ngStyle]="{top: car.postionTop + 'px', right: car.postionRight + 'px', transform: 'rotate(' + car.angle + 'deg)'}">
+<svg-icon class="car" *ngFor="let car of raceService.cars" [src]="'assets/images/car-' + car.color + '.svg'"
+  [ngClass]="{red: car.color === raceService.carColors.red, blue: car.color === raceService.carColors.blue, green: car.color === raceService.carColors.green, yellow: car.color === raceService.carColors.yellow}"
+  [ngStyle]="{top: car.postionTop + 'px', right: car.postionRight + 'px', transform: 'rotate(' + car.angle + 'deg)'}">
 </svg-icon>
-<app-icon class="explosion" *ngFor="let explosion of explosions" [icon]="'explosion'" [ngStyle]="{top: explosion.postionTop + 'px', right: explosion.postionRight + 'px'}" [@explosionAnimation]>
+<app-icon class="explosion" *ngFor="let explosion of raceService.explosions" [icon]="'explosion'"
+  [ngStyle]="{top: explosion.postionTop + 'px', right: explosion.postionRight + 'px'}" [@explosionAnimation]>
 </app-icon>
