@@ -9,6 +9,6 @@ export class IconComponent {
   location: string = '';
 
   @Input() set icon(name: string) {
-    this.location = '/assets/images/' + name + '.svg';
+    this.location = 'assets/images/' + name + '.svg';
   }
 }
