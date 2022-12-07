@@ -3,7 +3,7 @@ import {
   keyframes,
   style,
   transition,
-  trigger,
+  trigger
 } from '@angular/animations';
 import {
   Component,
@@ -11,7 +11,7 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
-  Output,
+  Output
 } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Car } from '../../models/car';
@@ -115,8 +115,8 @@ export class RaceComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor() {}
-
+  constructor() { }
+  //todo fahrsound für Lukas
   ngOnInit() {
     this.socket = io('wss://gossau-be.nussmueller.dev');
     // this.socket = io('ws://localhost:3000');
@@ -330,7 +330,7 @@ export class RaceComponent implements OnInit, OnDestroy {
     let explosion = new Explosion(positionTop, positionRight);
     this.explosions.push(explosion);
 
-    var kaboomSound = new Audio('/assets/sounds/kaboom.mp3');
+    var kaboomSound = new Audio('assets/sounds/kaboom.mp3');
     kaboomSound.play();
 
     setTimeout(() => {
@@ -370,7 +370,7 @@ export class RaceComponent implements OnInit, OnDestroy {
   }
 
   playHonkSound() {
-    var honkSound = new Audio('/assets/sounds/pinguHonk.mp3');
+    var honkSound = new Audio('assets/sounds/pinguHonk.mp3');
     honkSound.play();
   }
 }
