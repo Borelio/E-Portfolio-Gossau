@@ -44,8 +44,9 @@ import { RaceService } from './../../services/race.service';
 export class RaceComponent implements OnInit, OnDestroy {
   socket: Socket | undefined;
   raceService: RaceService;
+  userIsSleeping = false;
+  sleepingUserTimeOut: NodeJS.Timeout | undefined;
   refreshIntervall: NodeJS.Timer | undefined;
-  requestCarIntervall: NodeJS.Timer | undefined;
 
   @Output() socketConnected: EventEmitter<void> = new EventEmitter();
   @Output() socketDisconnected: EventEmitter<void> = new EventEmitter();
@@ -101,6 +102,23 @@ export class RaceComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener('window:visibilitychange')
+  visibilitychange() {
+    this.sleepingUserTimeOut = undefined;
+
+    if (document.hidden) {
+      this.sleepingUserTimeOut = setTimeout(() => {
+        this.userIsSleeping = true;
+        this.socket?.close();
+      }, 10000);
+    } else {
+      if (this.userIsSleeping) {
+        this.userIsSleeping = false;
+        this.socket?.connect();
+      }
+    }
+  }
+
   constructor(raceService: RaceService) {
     this.raceService = raceService;
   }
@@ -112,7 +130,7 @@ export class RaceComponent implements OnInit, OnDestroy {
     this.socket.on('connect', () => this.socketConnected.emit());
     this.socket.on('disconnect', () => this.socketDisconnected.emit());
 
-    this.requestCarIntervall = setInterval(() => {
+    this.raceService.requestCarIntervall = setInterval(() => {
       console.log('request car');
       this.socket?.emit('requestcar');
     }, 5000);
@@ -121,11 +139,14 @@ export class RaceComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    setInterval(async () => this.raceService.refreshView(), 100);
+    this.refreshIntervall = setInterval(
+      async () => this.raceService.refreshView(),
+      100
+    );
   }
 
   ngOnDestroy() {
     clearInterval(this.refreshIntervall);
-    clearInterval(this.requestCarIntervall);
+    clearInterval(this.raceService.requestCarIntervall);
   }
 }

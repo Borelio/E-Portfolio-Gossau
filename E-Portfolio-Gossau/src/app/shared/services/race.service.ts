@@ -18,7 +18,6 @@ export class RaceService {
   ];
   myCar: Car | undefined;
   startedMovingOtherCars: boolean = false;
-  refreshIntervall: NodeJS.Timer | undefined;
   requestCarIntervall: NodeJS.Timer | undefined;
   explosions: Explosion[] = [];
   keyBoard: KeyBoard = new KeyBoard();
@@ -30,7 +29,7 @@ export class RaceService {
     this.socket = socket;
 
     socket.on('playercarmap', (playerId: string, color: CarColor) => {
-      if (playerId === socket!.id) {
+      if (playerId === socket.id) {
         this.myCar = this.cars.find((car) => car.color === color)!;
         clearInterval(this.requestCarIntervall);
       }
