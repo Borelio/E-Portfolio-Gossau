@@ -109,12 +109,12 @@ export class RaceComponent implements OnInit, OnDestroy {
 
   @HostListener('window:visibilitychange')
   visibilitychange() {
-    this.sleepingUserTimeOut = undefined;
+    clearTimeout(this.sleepingUserTimeOut);
 
     if (document.hidden) {
       this.sleepingUserTimeOut = setTimeout(() => {
         this.userIsSleeping = true;
-        this.socket?.close();
+        this.socket?.disconnect();
       }, 10000);
     } else {
       if (this.userIsSleeping) {
@@ -135,9 +135,11 @@ export class RaceComponent implements OnInit, OnDestroy {
     this.socket.on('disconnect', () => {
       this.socketDisconnected.emit();
       this.raceService.reset();
+      console.log('%cWebsocket disconnected', 'color: red');
     });
     this.socket.on('connect', () => {
       this.socketConnected.emit();
+      console.log('%cWebsocket connected', 'color: lime');
 
       this.raceService.requestCarIntervall = setInterval(() => {
         console.log('request car');

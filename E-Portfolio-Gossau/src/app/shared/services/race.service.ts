@@ -52,6 +52,10 @@ export class RaceService {
       this.playHonkSound();
     });
 
+    socket.on('startBoost', (color: CarColor) => {
+      this.boostOtherCar(color);
+    });
+
     socket.on('crash', (data: string) => {
       let dataSplit = data.split(':');
       let positionTop = Number(dataSplit[0]);
@@ -70,13 +74,13 @@ export class RaceService {
   boost() {
     if (this.boostingTimeout || !this.myCar) {
       return;
-    } else {
-      this.boostingTimeout = true;
     }
 
+    this.boostingTimeout = true;
     this.carsMaxSpeed = this.boostMaxSpeed;
     this.carsAcceleration = this.boostAcceleration;
     this.myCar!.isBoosting = true;
+    this.socket?.emit('startBoost', this.myCar!.color);
     this.playBoostSound();
 
     setTimeout(() => {
@@ -88,6 +92,16 @@ export class RaceService {
     setTimeout(() => {
       this.boostingTimeout = false;
     }, this.boostingTimeoutLength);
+  }
+
+  boostOtherCar(color: CarColor) {
+    let car = this.cars.find((car) => car.color === color)!;
+    car.isBoosting = true;
+    this.playBoostSound();
+
+    setTimeout(() => {
+      car.isBoosting = false;
+    }, this.boostLenght);
   }
 
   refreshView() {

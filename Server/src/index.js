@@ -32,10 +32,6 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('startBoost', car.color);
     });
 
-    socket.on('stopBoost', () => {
-        socket.broadcast.emit('stopBoost', car.color);
-    });
-
     socket.on('honk', () => {
         socket.broadcast.emit('honk');
     });
