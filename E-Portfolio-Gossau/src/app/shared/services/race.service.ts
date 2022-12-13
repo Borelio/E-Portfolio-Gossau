@@ -32,6 +32,8 @@ export class RaceService {
   carsAcceleration: number = this.defaultAcceleration;
 
   boostingTimeout: boolean = false;
+  honkSoundPlaying: boolean = false;
+  motorSoundPlaying: boolean = false;
 
   init(socket: Socket) {
     this.socket = socket;
@@ -93,9 +95,21 @@ export class RaceService {
       this.socket!.on(posiontCode, (data: string) => {
         if (!this.myCar || this.myCar?.color[0] !== posiontCode) {
           let dataSplit = data.split(':');
+          let postionTopBevore = car.postionTop;
+          let postionRightBevore = car.postionRight;
+          let angleBevore = car.angle;
+
           car.postionTop = Number(dataSplit[0]);
           car.postionRight = Number(dataSplit[1]);
           car.angle = Number(dataSplit[2]);
+
+          if (
+            postionTopBevore !== car.postionTop ||
+            postionRightBevore !== car.postionRight ||
+            angleBevore !== car.angle
+          ) {
+            this.playMotorSound();
+          }
         }
       });
     });
@@ -180,6 +194,7 @@ export class RaceService {
       angleBevore !== car.angle
     ) {
       this.emitMovement(car);
+      this.playMotorSound();
     }
   }
 
@@ -330,12 +345,35 @@ export class RaceService {
   }
 
   async playHonkSound() {
-    var honkSound = new Audio('assets/sounds/pinguHonk.mp3');
-    await honkSound.play();
+    if (this.honkSoundPlaying) {
+      return;
+    }
+
+    this.honkSoundPlaying = true;
+    await this.playSound('pinguHonk');
+    this.honkSoundPlaying = false;
   }
 
   async playBoostSound() {
-    var boostSound = new Audio('assets/sounds/boost.mp3');
-    await boostSound.play();
+    await this.playSound('boost');
+  }
+
+  async playMotorSound() {
+    if (this.motorSoundPlaying) {
+      return;
+    }
+
+    this.motorSoundPlaying = true;
+    await this.playSound('motor', 0.5);
+    this.motorSoundPlaying = false;
+  }
+
+  async playSound(name: string, volume: number = 1) {
+    return new Promise((resolve) => {
+      var audio = new Audio(`assets/sounds/${name}.mp3`);
+      audio.onended = resolve;
+      audio.volume = volume;
+      audio.play();
+    });
   }
 }
