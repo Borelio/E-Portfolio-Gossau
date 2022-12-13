@@ -29,11 +29,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('startBoost', () => {
-        socket.broadcast.emit('startBoost', posiontCode);
+        socket.broadcast.emit('startBoost', car.color);
     });
 
     socket.on('stopBoost', () => {
-        socket.broadcast.emit('stopBoost', posiontCode);
+        socket.broadcast.emit('stopBoost', car.color);
     });
 
     socket.on('honk', () => {
