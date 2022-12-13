@@ -7,6 +7,7 @@ steps:
   image: node:16-alpine
   commands:
     - cd ./Frontend
+    - npm install -g @angular/cli
     - npm install
     - ng build
 
@@ -26,6 +27,7 @@ steps:
   image: node:16-alpine
   commands:
     - cd ./Frontend
+    - npm install -g @angular/cli
     - npm install
     - ng build --base-href /2022/ina4a/gruppe12/
 
