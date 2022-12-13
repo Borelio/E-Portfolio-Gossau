@@ -289,6 +289,7 @@ export class RaceService {
     car.postionRight = newCar.postionRight;
     car.angle = newCar.angle;
     car.isDestroyed = false;
+    car.isBoosting = false;
 
     if (car === this.myCar) {
       this.emitMovement(car);

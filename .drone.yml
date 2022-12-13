@@ -50,8 +50,10 @@ steps:
       - docker compose down
       - docker compose up -d
 
+depends_on:
+  - server
+
 trigger:
   event:
-  - promote
-  target:
-  - production
+  - push
+  - pull_request

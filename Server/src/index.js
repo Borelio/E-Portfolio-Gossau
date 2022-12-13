@@ -28,6 +28,14 @@ io.on('connection', (socket) => {
         car.lastMsg = msg;
     });
 
+    socket.on('startBoost', () => {
+        socket.broadcast.emit('startBoost', posiontCode);
+    });
+
+    socket.on('stopBoost', () => {
+        socket.broadcast.emit('stopBoost', posiontCode);
+    });
+
     socket.on('honk', () => {
         socket.broadcast.emit('honk');
     });
