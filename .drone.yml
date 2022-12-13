@@ -21,6 +21,8 @@ steps:
     dest_dir: /home/docker/Gossau/Frontend/content
     src_dir: /Frontend/dist/e-portfolio-gossau
     secure: true
+    verify: false
+    clean_dir: true
     hostname: 
       from_secret: server-url
     secrets: [ FTP_USERNAME, FTP_PASSWORD ]
@@ -54,6 +56,7 @@ steps:
   settings:
     src_dir: /Frontend/dist/e-portfolio-gossau
     verify: false
+    clean_dir: true
     hostname: 
       from_secret: lux-server-url
     secrets: [ FTP_USERNAME, FTP_PASSWORD ]
