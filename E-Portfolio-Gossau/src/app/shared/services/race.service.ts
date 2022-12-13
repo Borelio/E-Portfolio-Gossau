@@ -32,7 +32,6 @@ export class RaceService {
   carsAcceleration: number = this.defaultAcceleration;
 
   boostingTimeout: boolean = false;
-  isBoosting: boolean = false;
 
   init(socket: Socket) {
     this.socket = socket;
@@ -69,7 +68,7 @@ export class RaceService {
   }
 
   boost() {
-    if (this.boostingTimeout) {
+    if (this.boostingTimeout || !this.myCar) {
       return;
     } else {
       this.boostingTimeout = true;
@@ -77,12 +76,13 @@ export class RaceService {
 
     this.carsMaxSpeed = this.boostMaxSpeed;
     this.carsAcceleration = this.boostAcceleration;
-    this.isBoosting = true;
+    this.myCar!.isBoosting = true;
+    this.playBoostSound();
 
     setTimeout(() => {
       this.carsMaxSpeed = this.defaultMaxSpeed;
       this.carsAcceleration = this.defaultAcceleration;
-      this.isBoosting = false;
+      this.myCar!.isBoosting = false;
     }, this.boostLenght);
 
     setTimeout(() => {
@@ -314,8 +314,13 @@ export class RaceService {
     this.playHonkSound();
   }
 
-  playHonkSound() {
+  async playHonkSound() {
     var honkSound = new Audio('assets/sounds/pinguHonk.mp3');
-    honkSound.play();
+    await honkSound.play();
+  }
+
+  async playBoostSound() {
+    var boostSound = new Audio('assets/sounds/boost.mp3');
+    await boostSound.play();
   }
 }

@@ -15,6 +15,23 @@
   transition: all 0.2s;
   transition-timing-function: linear;
 
+  display: flex;
+  align-items: center;
+
+  .flame {
+    position: absolute;
+    height: 18px;
+    transform: rotate(-90deg);
+    left: -10px;
+    opacity: 0;
+    transition: opacity 0.2s;
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  .svg-icon,
   svg {
     height: $carHeight;
     width: $carWidth;

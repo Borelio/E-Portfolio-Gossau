@@ -5,6 +5,7 @@ export class Car {
   postionRight: number;
   angle: number;
   isDestroyed: boolean = false;
+  isBoosting: boolean = false;
 
   constructor(color: CarColor) {
     this.color = color;
