@@ -127,13 +127,18 @@ export class RaceComponent implements OnInit, OnDestroy {
     this.socket = io('wss://gossau-be.nussmueller.dev');
     // this.socket = io('ws://localhost:3000');
 
-    this.socket.on('connect', () => this.socketConnected.emit());
-    this.socket.on('disconnect', () => this.socketDisconnected.emit());
+    this.socket.on('disconnect', () => {
+      this.socketDisconnected.emit();
+      this.raceService.reset();
+    });
+    this.socket.on('connect', () => {
+      this.socketConnected.emit();
 
-    this.raceService.requestCarIntervall = setInterval(() => {
-      console.log('request car');
-      this.socket?.emit('requestcar');
-    }, 5000);
+      this.raceService.requestCarIntervall = setInterval(() => {
+        console.log('request car');
+        this.socket?.emit('requestcar');
+      }, 5000);
+    });
 
     this.raceService.init(this.socket);
   }

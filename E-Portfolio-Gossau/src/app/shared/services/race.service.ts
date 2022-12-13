@@ -53,6 +53,12 @@ export class RaceService {
     });
   }
 
+  reset() {
+    this.myCar = undefined;
+    this.startedMovingOtherCars = false;
+    clearInterval(this.requestCarIntervall);
+  }
+
   refreshView() {
     if (!this.startedMovingOtherCars && this.socket?.connected) {
       this.moveOtherCars();
