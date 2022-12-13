@@ -114,7 +114,7 @@ steps:
       from_secret: server-password
   settings:
     dest_dir: /home/docker/Gossau/Frontend/content
-    src_dir: ./Frontend/dist/e-portfolio-gossau
+    src_dir: /Frontend/dist/e-portfolio-gossau
     secure: true
     hostname: 
       from_secret: server-url
@@ -143,7 +143,7 @@ steps:
     FTP_PASSWORD: 
       from_secret: lux-server-password
   settings:
-    src_dir: ./Frontend/dist/e-portfolio-gossau
+    src_dir: /Frontend/dist/e-portfolio-gossau
     hostname: 
       from_secret: lux-server-url
     secrets: [ FTP_USERNAME, FTP_PASSWORD ]
