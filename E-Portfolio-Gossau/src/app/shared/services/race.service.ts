@@ -8,22 +8,31 @@ import { KeyBoard } from '../models/keyBoard';
   providedIn: 'root',
 })
 export class RaceService {
-  socket: Socket | undefined;
-  carColors = CarColor;
-  cars: Car[] = [
+  private readonly defaultMaxSpeed: number = 50;
+  private readonly defaultAcceleration: number = 2;
+  private readonly boostMaxSpeed: number = 100;
+  private readonly boostAcceleration: number = 5;
+  private readonly boostLenght: number = 2000;
+  private readonly boostingTimeoutLength: number = 5000;
+  readonly cars: Car[] = [
     new Car(CarColor.red),
     new Car(CarColor.blue),
     new Car(CarColor.green),
     new Car(CarColor.yellow),
   ];
+
+  socket: Socket | undefined;
   myCar: Car | undefined;
   startedMovingOtherCars: boolean = false;
   requestCarIntervall: NodeJS.Timer | undefined;
   explosions: Explosion[] = [];
   keyBoard: KeyBoard = new KeyBoard();
 
-  carsMakSpeed: number = 50;
-  carsAcceleration: number = 2;
+  carsMaxSpeed: number = this.defaultMaxSpeed;
+  carsAcceleration: number = this.defaultAcceleration;
+
+  boostingTimeout: boolean = false;
+  isBoosting: boolean = false;
 
   init(socket: Socket) {
     this.socket = socket;
@@ -57,6 +66,28 @@ export class RaceService {
     this.myCar = undefined;
     this.startedMovingOtherCars = false;
     clearInterval(this.requestCarIntervall);
+  }
+
+  boost() {
+    if (this.boostingTimeout) {
+      return;
+    } else {
+      this.boostingTimeout = true;
+    }
+
+    this.carsMaxSpeed = this.boostMaxSpeed;
+    this.carsAcceleration = this.boostAcceleration;
+    this.isBoosting = true;
+
+    setTimeout(() => {
+      this.carsMaxSpeed = this.defaultMaxSpeed;
+      this.carsAcceleration = this.defaultAcceleration;
+      this.isBoosting = false;
+    }, this.boostLenght);
+
+    setTimeout(() => {
+      this.boostingTimeout = false;
+    }, this.boostingTimeoutLength);
   }
 
   refreshView() {
@@ -107,6 +138,8 @@ export class RaceService {
     let positionRightBevore = car.postionRight;
     let angleBevore = car.angle;
 
+    let maxBackwardSpeed = (this.carsMaxSpeed / 3) * -1;
+
     if (car.isDestroyed) {
       return;
     }
@@ -116,8 +149,16 @@ export class RaceService {
       return;
     }
 
+    if (car.speed > this.carsMaxSpeed) {
+      car.speed -= this.carsAcceleration * 4;
+    }
+
+    if (car.speed < maxBackwardSpeed) {
+      car.speed += this.carsAcceleration * 4;
+    }
+
     if (this.keyBoard.up) {
-      if (car.speed < this.carsMakSpeed) {
+      if (car.speed < this.carsMaxSpeed) {
         car.speed += this.carsAcceleration;
       }
     } else {
@@ -131,7 +172,7 @@ export class RaceService {
     }
 
     if (this.keyBoard.down) {
-      if (car.speed > (this.carsMakSpeed / 3) * -1) {
+      if (car.speed > maxBackwardSpeed) {
         car.speed -= this.carsAcceleration;
       }
     } else {

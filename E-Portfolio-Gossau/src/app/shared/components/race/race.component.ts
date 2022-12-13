@@ -14,6 +14,7 @@ import {
   Output,
 } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
+import { CarColor } from './../../models/car';
 import { RaceService } from './../../services/race.service';
 
 @Component({
@@ -42,6 +43,7 @@ import { RaceService } from './../../services/race.service';
   ],
 })
 export class RaceComponent implements OnInit, OnDestroy {
+  readonly carColors = CarColor;
   socket: Socket | undefined;
   raceService: RaceService;
   userIsSleeping = false;
@@ -53,47 +55,50 @@ export class RaceComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'ArrowUp':
-      case 'w':
+    switch (event.key.toUpperCase()) {
+      case 'ARROWUP':
+      case 'W':
         this.raceService.keyBoard.up = true;
         break;
-      case 'ArrowDown':
-      case 's':
+      case 'ARROWDOWN':
+      case 'S':
         this.raceService.keyBoard.down = true;
         break;
-      case 'ArrowLeft':
-      case 'a':
+      case 'ARROWLEFT':
+      case 'A':
         this.raceService.keyBoard.left = true;
         break;
-      case 'ArrowRight':
-      case 'd':
+      case 'ARROWRIGHT':
+      case 'D':
         this.raceService.keyBoard.right = true;
         break;
       case ' ':
         this.raceService.keyBoard.space = true;
         this.raceService.honk();
         break;
+      case 'SHIFT':
+        this.raceService.boost();
+        break;
     }
   }
 
   @HostListener('window:keyup', ['$event'])
   handleKeyUp(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'ArrowUp':
-      case 'w':
+    switch (event.key.toUpperCase()) {
+      case 'ARROWUP':
+      case 'W':
         this.raceService.keyBoard.up = false;
         break;
-      case 'ArrowDown':
-      case 's':
+      case 'ARROWDOWN':
+      case 'S':
         this.raceService.keyBoard.down = false;
         break;
-      case 'ArrowLeft':
-      case 'a':
+      case 'ARROWLEFT':
+      case 'A':
         this.raceService.keyBoard.left = false;
         break;
-      case 'ArrowRight':
-      case 'd':
+      case 'ARROWRIGHT':
+      case 'D':
         this.raceService.keyBoard.right = false;
         break;
       case ' ':
