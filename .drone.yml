@@ -107,13 +107,18 @@ name: after-frontend
 steps:
 - name: deploy-to-server
   image: cschlosser/drone-ftps
+  environment:
+    FTP_USERNAME: 
+      from_secret: server-username
+    FTP_PASSWORD: 
+      from_secret: server-password
   settings:
     dest_dir: /home/docker/Gossau/Frontend/content
     src_dir: ./Frontend/dist/e-portfolio-gossau
     secure: true
     hostname: 
       from_secret: server-url
-    secrets: [ server-username, server-password ]
+    secrets: [ FTP_USERNAME, FTP_PASSWORD ]
 
 depends_on:
   - frontend
@@ -132,11 +137,16 @@ name: after-frontend-lux
 steps:
 - name: deploy-to-server
   image: cschlosser/drone-ftps
+  environment:
+    FTP_USERNAME: 
+      from_secret: lux-server-username
+    FTP_PASSWORD: 
+      from_secret: lux-server-password
   settings:
     src_dir: ./Frontend/dist/e-portfolio-gossau
     hostname: 
       from_secret: lux-server-url
-    secrets: [ lux-server-username, lux-server-password ]
+    secrets: [ FTP_USERNAME, FTP_PASSWORD ]
 
 depends_on:
   - frontend-lux
