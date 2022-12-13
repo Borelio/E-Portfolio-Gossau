@@ -53,6 +53,7 @@ steps:
       from_secret: lux-server-password
   settings:
     src_dir: /Frontend/dist/e-portfolio-gossau
+    verify: false
     hostname: 
       from_secret: lux-server-url
     secrets: [ FTP_USERNAME, FTP_PASSWORD ]
@@ -123,4 +124,3 @@ trigger:
   event:
   - push
   - pull_request
-  
