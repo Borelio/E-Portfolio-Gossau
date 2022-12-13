@@ -65,45 +65,6 @@ export class RaceService {
     });
   }
 
-  reset() {
-    this.myCar = undefined;
-    this.startedMovingOtherCars = false;
-    clearInterval(this.requestCarIntervall);
-  }
-
-  boost() {
-    if (this.boostingTimeout || !this.myCar) {
-      return;
-    }
-
-    this.boostingTimeout = true;
-    this.carsMaxSpeed = this.boostMaxSpeed;
-    this.carsAcceleration = this.boostAcceleration;
-    this.myCar!.isBoosting = true;
-    this.socket?.emit('startBoost', this.myCar!.color);
-    this.playBoostSound();
-
-    setTimeout(() => {
-      this.carsMaxSpeed = this.defaultMaxSpeed;
-      this.carsAcceleration = this.defaultAcceleration;
-      this.myCar!.isBoosting = false;
-    }, this.boostLenght);
-
-    setTimeout(() => {
-      this.boostingTimeout = false;
-    }, this.boostingTimeoutLength);
-  }
-
-  boostOtherCar(color: CarColor) {
-    let car = this.cars.find((car) => car.color === color)!;
-    car.isBoosting = true;
-    this.playBoostSound();
-
-    setTimeout(() => {
-      car.isBoosting = false;
-    }, this.boostLenght);
-  }
-
   refreshView() {
     if (!this.startedMovingOtherCars && this.socket?.connected) {
       this.moveOtherCars();
@@ -269,6 +230,58 @@ export class RaceService {
     }
   }
 
+  resetCar(car: Car) {
+    let newCar = new Car(car.color);
+    car.postionTop = newCar.postionTop;
+    car.postionRight = newCar.postionRight;
+    car.angle = newCar.angle;
+    car.isDestroyed = false;
+    car.isBoosting = false;
+
+    if (car === this.myCar) {
+      this.emitMovement(car);
+    }
+  }
+
+  reset() {
+    this.myCar = undefined;
+    this.startedMovingOtherCars = false;
+    clearInterval(this.requestCarIntervall);
+  }
+
+  boost() {
+    if (this.boostingTimeout || !this.myCar) {
+      return;
+    }
+
+    this.boostingTimeout = true;
+    this.carsMaxSpeed = this.boostMaxSpeed;
+    this.carsAcceleration = this.boostAcceleration;
+    this.myCar!.isBoosting = true;
+    this.socket?.emit('startBoost', this.myCar!.color);
+    this.playBoostSound();
+
+    setTimeout(() => {
+      this.carsMaxSpeed = this.defaultMaxSpeed;
+      this.carsAcceleration = this.defaultAcceleration;
+      this.myCar!.isBoosting = false;
+    }, this.boostLenght);
+
+    setTimeout(() => {
+      this.boostingTimeout = false;
+    }, this.boostingTimeoutLength);
+  }
+
+  boostOtherCar(color: CarColor) {
+    let car = this.cars.find((car) => car.color === color)!;
+    car.isBoosting = true;
+    this.playBoostSound();
+
+    setTimeout(() => {
+      car.isBoosting = false;
+    }, this.boostLenght);
+  }
+
   makeCrash(car: Car) {
     car.speed = 0;
     car.isDestroyed = true;
@@ -295,19 +308,6 @@ export class RaceService {
     setTimeout(() => {
       this.explosions = this.explosions.filter((x) => x !== explosion);
     }, 1500);
-  }
-
-  resetCar(car: Car) {
-    let newCar = new Car(car.color);
-    car.postionTop = newCar.postionTop;
-    car.postionRight = newCar.postionRight;
-    car.angle = newCar.angle;
-    car.isDestroyed = false;
-    car.isBoosting = false;
-
-    if (car === this.myCar) {
-      this.emitMovement(car);
-    }
   }
 
   round(value: number, decimals: number) {
