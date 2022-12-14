@@ -31,6 +31,7 @@ export class RaceService {
     carsMaxSpeed: number = this.defaultMaxSpeed;
     carsAcceleration: number = this.defaultAcceleration;
 
+    disableMotorSound: boolean = true;
     boostingTimeout: boolean = false;
     honkSoundPlaying: boolean = false;
     motorSoundPlaying: boolean = false;
@@ -363,7 +364,7 @@ export class RaceService {
     }
 
     async playMotorSound() {
-        if (this.motorSoundPlaying) {
+        if (this.disableMotorSound || this.motorSoundPlaying) {
             return;
         }
 
