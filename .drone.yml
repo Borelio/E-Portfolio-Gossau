@@ -71,14 +71,14 @@ type: docker
 name: server
 
 steps:
-- name: pre-build
-  image: alpine
-  environment:
-    CONFIG:
-      from_secret: config-file
-  commands:
-    - cd ./Server/src
-    - echo $${CONFIG} > config.json
+  - name: pre-build
+    image: alpine
+    environment:
+      CONFIG:
+        from_secret: config-file
+    commands:
+      - cd ./Server/src
+      - echo $${CONFIG} > config.json
   - name: build
     image: plugins/docker
     settings:
