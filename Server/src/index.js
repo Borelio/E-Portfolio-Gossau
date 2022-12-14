@@ -17,7 +17,7 @@ let cars = [];
 io.on('connection', (socket) => {
     newPlayer(socket.id);
     let car = cars.find(car => car.playerId === socket.id);
-    let posiontCode = car?.color[0];
+    let posiontCode = car ? car.color[0] : '';
 
     socket.on('disconnect', () => {
         playerDisconnected(socket.id);
@@ -50,6 +50,16 @@ io.on('connection', (socket) => {
             console.log('No new car found');
         }
     });
+});
+
+app.post('/kick/all', (req, res) => {
+    if (!req.query.hasOwnProperty('key') || req.query.key !== 'fuuweag67rt34uzfoiazzgd86ftasidzzgfjhagsdif') {
+        return;
+    }
+
+    io.emit('closeTab');
+
+    res.send('Okay');
 });
 
 server.listen(3000, () => {
