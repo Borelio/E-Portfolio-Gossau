@@ -3,127 +3,124 @@ type: docker
 name: frontend
 
 steps:
-- name: build
-  image: node:16-alpine
-  commands:
-    - cd ./Frontend
-    - npm install -g @angular/cli
-    - npm install
-    - ng build
-- name: deploy-to-server
-  image: cschlosser/drone-ftps
-  environment:
-    FTP_USERNAME: 
-      from_secret: server-username
-    FTP_PASSWORD: 
-      from_secret: server-password
-  settings:
-    dest_dir: /home/docker/Gossau/Frontend/content
-    src_dir: /Frontend/dist/e-portfolio-gossau
-    secure: true
-    verify: false
-    clean_dir: true
-    hostname: 
-      from_secret: server-url
-    secrets: [ FTP_USERNAME, FTP_PASSWORD ]
+  - name: build
+    image: node:16-alpine
+    commands:
+      - cd ./Frontend
+      - npm install -g @angular/cli
+      - npm install
+      - ng build
+  - name: deploy-to-server
+    image: cschlosser/drone-ftps
+    environment:
+      FTP_USERNAME:
+        from_secret: my-server-username
+      FTP_PASSWORD:
+        from_secret: my-server-password
+    settings:
+      dest_dir: /home/docker/Gossau/Frontend/content
+      src_dir: /Frontend/dist/e-portfolio-gossau
+      secure: true
+      verify: false
+      clean_dir: true
+      hostname:
+        from_secret: my-server-url
+      secrets: [FTP_USERNAME, FTP_PASSWORD]
 
 trigger:
   event:
-  - push
-  - pull_request
+    - push
+    - pull_request
 
 ---
-
 kind: pipeline
 type: docker
 name: frontend-lux
 
 steps:
-- name: build
-  image: node:16-alpine
-  commands:
-    - cd ./Frontend
-    - npm install -g @angular/cli
-    - npm install
-    - ng build --base-href /2022/ina4a/gruppe12/
-- name: deploy-to-server
-  image: cschlosser/drone-ftps
-  environment:
-    FTP_USERNAME: 
-      from_secret: lux-server-username
-    FTP_PASSWORD: 
-      from_secret: lux-server-password
-  settings:
-    src_dir: /Frontend/dist/e-portfolio-gossau
-    verify: false
-    clean_dir: true
-    hostname: 
-      from_secret: lux-server-url
-    secrets: [ FTP_USERNAME, FTP_PASSWORD ]
+  - name: build
+    image: node:16-alpine
+    commands:
+      - cd ./Frontend
+      - npm install -g @angular/cli
+      - npm install
+      - ng build --base-href /2022/ina4a/gruppe12/
+  - name: deploy-to-server
+    image: cschlosser/drone-ftps
+    environment:
+      FTP_USERNAME:
+        from_secret: lux-server-username
+      FTP_PASSWORD:
+        from_secret: lux-server-password
+    settings:
+      src_dir: /Frontend/dist/e-portfolio-gossau
+      verify: false
+      clean_dir: true
+      hostname:
+        from_secret: lux-server-url
+      secrets: [FTP_USERNAME, FTP_PASSWORD]
 
 trigger:
   event:
-  - push
-  - pull_request
+    - push
+    - pull_request
 
 ---
-
 kind: pipeline
 type: docker
 name: server
 
 steps:
-- name: build
-  image: plugins/docker
-  settings:
-    registry: 
-      from_secret: docker-registry
-    username: 
-      from_secret: docker-username
-    password: 
-      from_secret: docker-password
-    repo: 
-      from_secret: docker-repo
-    tags: latest
-    dry_run: false
-    purge: true
-    context: ./Server
-    dockerfile: ./Server/Dockerfile
+  - name: build
+    image: plugins/docker
+    settings:
+      registry:
+        from_secret: docker-registry
+      username:
+        from_secret: docker-username
+      password:
+        from_secret: docker-password
+      repo:
+        from_secret: docker-repo
+      tags: latest
+      dry_run: false
+      purge: true
+      context: ./Server
+      dockerfile: ./Server/Dockerfile
 
 trigger:
   event:
-  - push
-  - pull_request
+    - push
+    - pull_request
 
 ---
-
 kind: pipeline
 type: docker
 name: after-server
 
 steps:
-- name: deploy-to-server
-  image: appleboy/drone-ssh
-  settings:
-    host: 
-      from_secret: server-url
-    username:
-      from_secret: server-username
-    port: 
-      from_secret: server-port
-    key:
-      from_secret: server-key 
-    command_timeout: 2m
-    script:
-      - cd /home/docker/Gossau/Server
-      - docker compose pull
-      - docker compose down
-      - docker compose up -d
+  - name: deploy-to-server
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: server-url
+      username:
+        from_secret: server-username
+      port:
+        from_secret: server-port
+      key:
+        from_secret: server-key
+      command_timeout: 2m
+      script:
+        - cd /home/docker/Gossau/Server
+        - docker compose pull
+        - docker compose down
+        - docker compose up -d
 
 depends_on:
   - server
 
 trigger:
   event:
-  - push
-  - pull_request
+    - push
+    - pull_request
