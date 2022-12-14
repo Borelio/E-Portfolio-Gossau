@@ -1,40 +1,5 @@
 kind: pipeline
 type: docker
-name: frontend
-
-steps:
-  - name: build
-    image: node:16-alpine
-    commands:
-      - cd ./Frontend
-      - npm install -g @angular/cli
-      - npm install
-      - ng build
-  - name: deploy-to-server
-    image: cschlosser/drone-ftps
-    environment:
-      FTP_USERNAME:
-        from_secret: my-server-username
-      FTP_PASSWORD:
-        from_secret: my-server-password
-    settings:
-      dest_dir: /home/docker/Gossau/Frontend/content
-      src_dir: /Frontend/dist/e-portfolio-gossau
-      secure: true
-      verify: false
-      clean_dir: true
-      hostname:
-        from_secret: my-server-url
-      secrets: [FTP_USERNAME, FTP_PASSWORD]
-
-trigger:
-  event:
-    - push
-    - pull_request
-
----
-kind: pipeline
-type: docker
 name: frontend-lux
 
 steps:
