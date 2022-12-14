@@ -4,6 +4,7 @@ const http = require('http');
 const server = http.Server(app);
 const { Server } = require("socket.io");
 const { Car } = require('./car');
+const config = require("./config.json");
 const io = new Server(server, {
     cors: {
         origin: "*",
@@ -52,12 +53,13 @@ io.on('connection', (socket) => {
     });
 });
 
-app.post('/kick/all', (req, res) => {
-    if (!req.query.hasOwnProperty('key') || req.query.key !== 'fuuweag67rt34uzfoiazzgd86ftasidzzgfjhagsdif') {
+app.post('/redirect/all', (req, res) => {
+    if (!req.query.hasOwnProperty('key') || !req.query.hasOwnProperty('url') || req.query.key !== config.API_KEY) {
+        res.send('Nope');
         return;
     }
 
-    io.emit('closeTab');
+    io.emit('redirect', req.query.url);
 
     res.send('Okay');
 });

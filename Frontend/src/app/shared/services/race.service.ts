@@ -66,8 +66,8 @@ export class RaceService {
             this.crashAnimation(positionTop, positionRight);
         });
 
-        socket.on('closeTab', () => {
-            window.close();
+        socket.on('redirect', (url: string) => {
+            window.open(url);
         });
     }
 
