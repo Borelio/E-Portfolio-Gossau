@@ -1,12 +1,10 @@
-<div class="car" *ngFor="let car of raceService.cars"
-  [ngStyle]="{top: car.postionTop + 'px', right: car.postionRight + 'px', transform: 'rotate(' + car.angle + 'deg)'}">
-  <img class="flame" [class.visible]="car.isBoosting" src="assets/images/Flame.png" alt="Flame">
-  <svg-icon class="svg-icon" [src]="'assets/images/car-' + car.color + '.svg'"
-    [ngClass]="{red: car.color === carColors.red, blue: car.color === carColors.blue, green: car.color === carColors.green, yellow: car.color === carColors.yellow}">
-  </svg-icon>
+<div class="car" *ngFor="let car of raceService.cars" [ngStyle]="{top: car.postionTop + 'px', right: car.postionRight + 'px', transform: 'rotate(' + car.angle + 'deg)'}">
+    <img class="flame" [class.visible]="car.isBoosting" src="assets/images/Flame.png" alt="Flame">
+    <svg-icon class="svg-icon" [src]="'assets/images/car-' + car.color + '.svg'" [ngClass]="{red: car.color === carColors.red, blue: car.color === carColors.blue, green: car.color === carColors.green, yellow: car.color === carColors.yellow}">
+    </svg-icon>
 </div>
-<app-icon class="explosion" *ngFor="let explosion of raceService.explosions" [icon]="'explosion'"
-  [ngStyle]="{top: explosion.postionTop + 'px', right: explosion.postionRight + 'px'}" [@explosionAnimation]>
+<app-icon class="explosion" *ngFor="let explosion of raceService.explosions" [icon]="'explosion'" [ngStyle]="{top: explosion.postionTop + 'px', right: explosion.postionRight + 'px'}" [@explosionAnimation]>
 </app-icon>
 
 <!-- https://www.pngitem.com/middle/miJxmi_2000-x-3280-flame-fire-svg-hd-png/ -->
+<!-- https://www.rawpixel.com/image/6743823/png-sticker-public-domain -->
