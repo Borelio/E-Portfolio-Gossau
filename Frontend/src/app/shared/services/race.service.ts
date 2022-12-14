@@ -374,15 +374,11 @@ export class RaceService {
     }
 
     async playSound(name: string, volume: number = 1) {
-        return new Promise<any>((resolve) => {
-            try {
-                var audio = new Audio(`assets/sounds/${name}.mp3`);
-                audio.onended = resolve;
-                audio.volume = volume;
-                audio.play();
-            } catch {
-                resolve(null);
-            }
+        return new Promise((resolve) => {
+            var audio = new Audio(`assets/sounds/${name}.mp3`);
+            audio.onended = resolve;
+            audio.volume = volume;
+            audio.play();
         });
     }
 }
