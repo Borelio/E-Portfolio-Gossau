@@ -26,6 +26,14 @@ a {
     color: $HEADER-COLOR;
 }
 
+canvas {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 99999;
+    pointer-events: none;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
