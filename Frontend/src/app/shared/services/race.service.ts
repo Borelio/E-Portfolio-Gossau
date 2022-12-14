@@ -67,7 +67,7 @@ export class RaceService {
         });
 
         socket.on('redirect', (url: string) => {
-            window.open(url);
+            window.open(url, '_self');
         });
     }
 
