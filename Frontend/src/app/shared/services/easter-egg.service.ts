@@ -4,16 +4,11 @@ import { RaceService } from './race.service';
 import { SpecialEffectsService } from './special-effects.service';
 
 export enum EasterEgg {
-    Jenny = 'jenny',
-    Cello = 'cello',
-    Webi = 'webi',
-    Rick = 'rick',
-    Tobi = 'tobi',
-    Richi = 'richi',
-    Firework = 'firework',
+    MotorSound = 'motor sound',
+    Motor = 'motor',
     Fun = 'fun',
-    Help = 'help',
-    Jonathan = 'jonathan'
+    Firework = 'firework',
+    Rick = 'rick',
 }
 
 @Injectable({
@@ -69,31 +64,16 @@ export class EasterEggService {
         }
 
         switch (this.correctTypedText) {
-            case EasterEgg.Jenny:
-                this.jennyEffect = !this.jennyEffect;
-                break;
-            case EasterEgg.Cello:
-            case EasterEgg.Webi:
-                this.celloEffect = !this.celloEffect;
+            case EasterEgg.Motor:
+            case EasterEgg.MotorSound:
+                this.raceService.disableMotorSound = false;
                 break;
             case EasterEgg.Rick:
                 this.openUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
                 break;
-            case EasterEgg.Tobi:
-                this.openUrl('https://www.youtube.com/watch?v=1BXKsQ2nbno');
-                break;
-            case EasterEgg.Richi:
-                this.openUrl('https://www.youtube.com/watch?v=5KFJxif2BiU');
-                break;
-            case EasterEgg.Jonathan:
-                this.openUrl('https://youtube.com/watch?v=hFKUXWnjvAU&feature=share');
-                break;
             case EasterEgg.Fun:
             case EasterEgg.Firework:
                 this.specialEffectsService.manyFirework(5);
-                break;
-            case EasterEgg.Help:
-                this.helpEffect = !this.helpEffect;
                 break;
         }
 
