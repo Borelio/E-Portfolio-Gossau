@@ -1,42 +1,55 @@
 @import "colors";
 :host {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 }
 
 h1 {
-  color: $PRIMARY-COLOR;
-  margin: 20px;
+    color: $PRIMARY-COLOR;
+    margin: 20px;
 }
 
 .logo {
-  margin: 20px;
-  margin-left: auto;
-  height: 100px;
-  cursor: pointer;
-
-  ::ng-deep {
-    .car {
-      transition: all 0.5s;
-      opacity: 1;
+    margin: 20px;
+    margin-left: auto;
+    height: 100px;
+    cursor: pointer;
+     ::ng-deep {
+        .car {
+            transition: all 0.5s;
+            opacity: 1;
+        }
     }
-  }
-
-  &.race-started {
-    ::ng-deep {
-      .car {
-        opacity: 0;
-      }
+    &.race-started {
+         ::ng-deep {
+            .car {
+                opacity: 0;
+            }
+        }
     }
-  }
 }
 
 .race {
-  opacity: 0;
-  transition: all 0.5s;
+    opacity: 0;
+    transition: all 0.5s;
+    &.race-started {
+        opacity: 1;
+    }
+}
 
-  &.race-started {
-    opacity: 1;
-  }
+@media screen and (max-width: 550px) {
+    .logo {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        height: 50px;
+        &.race-started {
+             ::ng-deep {
+                .car {
+                    opacity: 1;
+                }
+            }
+        }
+    }
 }
