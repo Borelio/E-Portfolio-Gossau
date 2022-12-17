@@ -1,0 +1,47 @@
+@import "sizes";
+@import "colors";
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    backdrop-filter: blur(5px);
+    pointer-events: none;
+    transition: all 0.5s;
+
+    &.show {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+
+.close-holder {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px;
+}
+
+.close-icon {
+    height: 50px;
+    color: red;
+}
+
+h1 {
+    color: $PRIMARY-COLOR;
+    margin: 20px;
+}
+
+@media screen and (min-width: $NAVIGATION-MOBILE-QUERRY) {
+    :host {
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+}

@@ -1,0 +1,7 @@
+<div class="close-holder">
+    <app-icon class="close-icon" icon="close" (click)="showChange.emit(false)"></app-icon>
+</div>
+
+<div *ngFor="let route of routes" class="route" (click)="navigate(route.url)">
+    <h1>{{route.name}}</h1>
+</div>

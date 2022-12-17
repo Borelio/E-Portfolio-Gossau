@@ -1,7 +1,11 @@
 @import "colors";
+@import "sizes";
+
 :host {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    padding: 20px;
     width: 100%;
 }
 
@@ -11,18 +15,17 @@ h1 {
 }
 
 .logo {
-    margin: 20px;
     margin-left: auto;
     height: 100px;
     cursor: pointer;
-     ::ng-deep {
+    ::ng-deep {
         .car {
             transition: all 0.5s;
             opacity: 1;
         }
     }
     &.race-started {
-         ::ng-deep {
+        ::ng-deep {
             .car {
                 opacity: 0;
             }
@@ -38,20 +41,34 @@ h1 {
     }
 }
 
-@media screen and (max-width: 550px) {
-    .logo {
-        position: fixed;
-        bottom: 0;
-        right: 0;
+.navigation-icon {
+    display: none;
+}
+
+@media screen and (max-width: $NAVIGATION-MOBILE-QUERRY) {
+    :host {
+        padding: 10px;
+    }
+
+    .navigation-icon {
+        display: block;
         height: 50px;
-        &.race-started {
-             ::ng-deep {
-                .car {
-                    opacity: 1;
-                }
+    }
+
+    .route {
+        display: none;
+    }
+
+    .logo {
+        height: 50px;
+
+        ::ng-deep {
+            .car {
+                opacity: 1 !important;
             }
         }
     }
+
     .race {
         opacity: 0 !important;
     }
