@@ -1,4 +1,3 @@
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,10 +8,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PicturesComponent } from './pages/pictures/pictures.component';
 import { VideosComponent } from './pages/videos/videos.component';
+import { FullPageNavigationComponent } from './shared/components/full-page-navigation/full-page-navigation.component';
 import { IconComponent } from './shared/components/icon/icon.component';
 import { NavigationComponent } from './shared/components/navigation/navigation.component';
 import { RaceComponent } from './shared/components/race/race.component';
-import { FullPageNavigationComponent } from './shared/components/full-page-navigation/full-page-navigation.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,7 @@ import { FullPageNavigationComponent } from './shared/components/full-page-navig
     BrowserAnimationsModule,
     AngularSvgIconModule.forRoot(),
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
