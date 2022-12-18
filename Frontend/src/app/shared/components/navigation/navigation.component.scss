@@ -67,10 +67,6 @@
 }
 
 @media screen and (max-width: $NAVIGATION-MOBILE-QUERRY) {
-    :host {
-        padding: 10px;
-    }
-
     .navigation-icon {
         display: block;
         height: 50px;
