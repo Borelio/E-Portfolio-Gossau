@@ -4,7 +4,7 @@ import { PicturesComponent } from './../pages/pictures/pictures.component';
 import { VideosComponent } from './../pages/videos/videos.component';
 import { slideLeft, slideRight } from './animations/route-animations';
 
-export const STATES = ['home', 'pictures', 'videos'] as const;
+export const STATES = ['home', 'pictures', 'video'] as const;
 
 export type ExampleAppState = typeof STATES[number];
 
@@ -25,8 +25,8 @@ export const stateConfiguration: Record<ExampleAppState, StateConfiguration> = {
     component: PicturesComponent,
     order: 1,
   },
-  videos: {
-    path: 'videos',
+  video: {
+    path: 'video',
     component: VideosComponent,
     order: 2,
   },

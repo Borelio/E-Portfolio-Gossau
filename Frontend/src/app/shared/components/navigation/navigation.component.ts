@@ -13,6 +13,6 @@ export class NavigationComponent {
   routes = [
     new NavigationRoute('/home', 'Home'),
     new NavigationRoute('/pictures', 'Bilder'),
-    new NavigationRoute('/videos', 'Videos'),
+    new NavigationRoute('/video', 'Video'),
   ];
 }

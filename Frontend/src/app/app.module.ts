@@ -13,6 +13,7 @@ import { FullPageNavigationComponent } from './shared/components/full-page-navig
 import { IconComponent } from './shared/components/icon/icon.component';
 import { NavigationComponent } from './shared/components/navigation/navigation.component';
 import { RaceComponent } from './shared/components/race/race.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { RaceComponent } from './shared/components/race/race.component';
     IconComponent,
     RaceComponent,
     FullPageNavigationComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
