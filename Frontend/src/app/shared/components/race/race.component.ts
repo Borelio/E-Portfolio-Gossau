@@ -7,6 +7,7 @@ import {
 } from '@angular/animations';
 import {
   Component,
+  ElementRef,
   EventEmitter,
   HostListener,
   OnDestroy,
@@ -48,6 +49,8 @@ export class RaceComponent implements OnInit, OnDestroy {
   raceService: RaceService;
   userIsSleeping = false;
   sleepingUserTimeOut: NodeJS.Timeout | undefined;
+  mutationObserver: MutationObserver | undefined;
+  componentIsVisible = true;
 
   @Output() socketConnected: EventEmitter<void> = new EventEmitter();
   @Output() socketDisconnected: EventEmitter<void> = new EventEmitter();
@@ -123,7 +126,22 @@ export class RaceComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(raceService: RaceService) {
+  @HostListener('window:resize')
+  onResize() {
+    let componentIsVisible = window.innerWidth > 600;
+
+    if (componentIsVisible !== this.componentIsVisible) {
+      this.componentIsVisible = componentIsVisible;
+
+      if (componentIsVisible) {
+        this.socket?.connect();
+      } else {
+        this.socket?.disconnect();
+      }
+    }
+  }
+
+  constructor(private elementRef: ElementRef, raceService: RaceService) {
     this.raceService = raceService;
   }
 
@@ -147,6 +165,7 @@ export class RaceComponent implements OnInit, OnDestroy {
     });
 
     this.raceService.init(this.socket);
+    this.onResize();
   }
 
   ngAfterViewInit() {
@@ -156,5 +175,7 @@ export class RaceComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     clearInterval(this.raceService.refreshIntervall);
     clearInterval(this.raceService.requestCarIntervall);
+
+    this.mutationObserver?.disconnect();
   }
 }
