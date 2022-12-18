@@ -10,8 +10,8 @@ import { KeyBoard } from '../models/keyBoard';
 export class RaceService {
   private readonly defaultMaxSpeed: number = 50;
   private readonly defaultAcceleration: number = 2;
-  private readonly boostMaxSpeed: number = 100;
-  private readonly boostAcceleration: number = 5;
+  private readonly boostMaxSpeed: number = 70;
+  private readonly boostAcceleration: number = 3;
   private readonly boostLenght: number = 2000;
   private readonly boostingTimeoutLength: number = 5000;
   readonly cars: Car[] = [
@@ -73,8 +73,9 @@ export class RaceService {
     });
   }
 
-  startRefreshIntervall() {
-    this.refreshIntervall = setInterval(async () => this.refreshView(), 100);
+  startRefreshIntervall(ms: number = 100) {
+    clearInterval(this.refreshIntervall);
+    this.refreshIntervall = setInterval(async () => this.refreshView(), ms);
   }
 
   refreshView() {
@@ -279,6 +280,8 @@ export class RaceService {
       return;
     }
 
+    this.startRefreshIntervall(50);
+
     this.boostingTimeout = true;
     this.carsMaxSpeed = this.boostMaxSpeed;
     this.carsAcceleration = this.boostAcceleration;
@@ -299,6 +302,7 @@ export class RaceService {
       this.carsMaxSpeed = this.defaultMaxSpeed;
       this.carsAcceleration = this.defaultAcceleration;
       this.myCar!.isBoosting = false;
+      this.startRefreshIntervall();
     }, this.boostLenght);
 
     setTimeout(() => {
