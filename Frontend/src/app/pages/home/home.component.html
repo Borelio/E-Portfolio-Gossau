@@ -1,28 +1,23 @@
 <img class="main-picture" src="assets/images/picture1.jpg" alt="Gossau Stadt">
 <section class="text why">
     <h1 class="primary-header">WHY?</h1>
-    <p>Wir bekamen in der Schule die möglichkeit eine Webseite zu Designen und umzusetzen. Es müssen mindenstens 3
+    <p>Wir bekamen in der Schule die Möglichkeit, eine Webseite zu designen und umzusetzen. Es müssen mindestens 3
         Bilder und ein Video eingebunden werden.
     </p>
-
 </section>
 <section class="text game">
     <h1 class="primary-header">GAME</h1>
     <p>
         Wie man unschwer an dieser Seite erkennen kann, bin ich nicht der beste im Designen von Webseiten. Aus diesem
-        Grund habe ich micht dazu entschieden die Funktionalität des Logos zu erweitern. Es gibt nun die Möglichkeit mit
-        den Autos über die gesammte Seite zu fahren und andere Spieler, welche auch gerade diese Seite besuchen, zu
+        Grund habe ich nicht dazu entschieden, die Funktionalität des Logos zu erweitern. Es gibt nun die Möglichkeit,
+        mit den Autos über die gesamte Seite zu fahren und andere Spieler, welche auch gerade diese Seite besuchen, zu
         rammen.
         <span class="game-error" *ngIf="gameErrorDelayOver && !raceService.socket?.connected">Aus einem unbekannten
-            Grund ist
-            diese Funktionalität
-            jeodch momentan nicht verfügbar, versuche es doch Später erneut.</span>
+            Grund ist diese Funktionalität jedoch momentan nicht verfügbar, versuche es doch später erneut.</span>
     </p>
-    <p>Um das Logo zu bedienen nutze doch einfach die Pfeiltasten oder die klasischen WASD-Tasten. Die Leertaste ist gut
-        um andere Besucher zu nerfen und mit SHIFT kannst du die Wände schneller rammen. Wenn du an deinem Gerät keine
-        Tastatur hat ist dies dein Problem.</p>
+    <p>Um das Logo zu bedienen, nutze doch einfach die Pfeiltasten oder die klassischen WASD-Tasten. Die Leertaste ist
+        gut um andere Besucher zu nerven und mit SHIFT kannst du die Wände schneller rammen. Wenn du an deinem Gerät
+        keine Tastatur hast, ist dies dein Problem.</p>
     <p class="game-error" *ngIf="gameErrorDelayOver && !raceService.myCar">Leider hat diese Seite gerade mehr als 4
-        Besucher,
-        wesshalb kein Auto
-        für dich zur verfügung steht. Versuche es doch später erneut.</p>
+        Besucher, weshalb kein Auto für dich zur Verfügung steht. Versuche es doch später erneut.</p>
 </section>
