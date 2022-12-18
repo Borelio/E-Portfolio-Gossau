@@ -23,7 +23,8 @@ export class FullPageNavigationComponent {
 
   constructor(private router: Router) {}
 
-  navigate(route: string) {
+  navigate(event: MouseEvent, route: string) {
+    event.preventDefault();
     this.router.navigate([route]);
     this.showChange.emit(false);
   }

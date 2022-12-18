@@ -1,5 +1,6 @@
-<a *ngFor="let route of routes" class="route" [routerLink]="route.url">
+<a *ngFor="let route of routes" class="route" [routerLink]="route.url" routerLinkActive="active">
   <h1>{{route.name}}</h1>
+  <div class="line"></div>
 </a>
 
 <app-icon class="navigation-icon" icon="menue" (click)="fullPageNavigationOpen = !fullPageNavigationOpen"></app-icon>

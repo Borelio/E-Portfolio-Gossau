@@ -2,6 +2,8 @@
     <app-icon class="close-icon" icon="close" (click)="showChange.emit(false)"></app-icon>
 </div>
 
-<div *ngFor="let route of routes" class="route" (click)="navigate(route.url)">
+<a *ngFor="let route of routes" class="route" [routerLink]="route.url" routerLinkActive="active"
+    (click)="navigate($event, route.url)">
     <h1>{{route.name}}</h1>
-</div>
+    <div class="line"></div>
+</a>
