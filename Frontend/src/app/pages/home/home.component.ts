@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ImagePreloadService } from './../../shared/services/image-preload.service';
 import { RaceService } from './../../shared/services/race.service';
 
 @Component({
@@ -8,11 +9,16 @@ import { RaceService } from './../../shared/services/race.service';
 })
 export class HomeComponent implements OnInit {
   raceService: RaceService;
+  imagePreloadService: ImagePreloadService;
   gameErrorDelay: number = 2000;
   gameErrorDelayOver: boolean = false;
 
-  constructor(raceService: RaceService) {
+  constructor(
+    raceService: RaceService,
+    imagePreloadService: ImagePreloadService
+  ) {
     this.raceService = raceService;
+    this.imagePreloadService = imagePreloadService;
   }
 
   ngOnInit() {
