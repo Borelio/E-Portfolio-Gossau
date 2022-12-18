@@ -25,6 +25,7 @@ export class RaceService {
   myCar: Car | undefined;
   startedMovingOtherCars: boolean = false;
   requestCarIntervall: NodeJS.Timer | undefined;
+  refreshIntervall: NodeJS.Timer | undefined;
   explosions: Explosion[] = [];
   keyBoard: KeyBoard = new KeyBoard();
 
@@ -70,6 +71,10 @@ export class RaceService {
     socket.on('redirect', (url: string) => {
       window.open(url, '_self');
     });
+  }
+
+  startRefreshIntervall() {
+    this.refreshIntervall = setInterval(async () => this.refreshView(), 100);
   }
 
   refreshView() {
@@ -270,7 +275,7 @@ export class RaceService {
   }
 
   boost() {
-    if (this.boostingTimeout || !this.myCar) {
+    if (!this.socket?.connected || this.boostingTimeout || !this.myCar) {
       return;
     }
 
@@ -354,6 +359,10 @@ export class RaceService {
   }
 
   honk() {
+    if (!this.socket?.connected) {
+      return;
+    }
+
     this.socket?.emit('honk');
     this.playHonkSound();
   }
