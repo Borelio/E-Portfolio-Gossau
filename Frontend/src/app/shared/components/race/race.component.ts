@@ -159,7 +159,6 @@ export class RaceComponent implements OnInit, OnDestroy {
       console.log('%cWebsocket connected', 'color: lime');
 
       this.raceService.requestCarIntervall = setInterval(() => {
-        console.log('request car');
         this.socket?.emit('requestcar');
       }, 5000);
     });
