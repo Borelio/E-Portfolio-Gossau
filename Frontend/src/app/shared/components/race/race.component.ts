@@ -152,7 +152,6 @@ export class RaceComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.socket = io(this.urlService.urls.websocket);
-    // this.socket = io('ws://localhost:3000');
 
     this.socket.on('disconnect', () => {
       this.socketDisconnected.emit();
