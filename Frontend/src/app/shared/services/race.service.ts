@@ -3,6 +3,7 @@ import { Socket } from 'socket.io-client';
 import { Car, CarColor } from '../models/car';
 import { Explosion } from '../models/explosion';
 import { KeyBoard } from '../models/keyBoard';
+import { UrlService } from './url.service';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +37,8 @@ export class RaceService {
   boostingTimeout: boolean = false;
   honkSoundPlaying: boolean = false;
   motorSoundPlaying: boolean = false;
+
+  constructor(private urlService: UrlService) {}
 
   init(socket: Socket) {
     this.socket = socket;
@@ -340,8 +343,7 @@ export class RaceService {
     let explosion = new Explosion(positionTop, positionRight);
     this.explosions.push(explosion);
 
-    var kaboomSound = new Audio('assets/sounds/kaboom.mp3');
-    kaboomSound.play();
+    this.playKaboomSound();
 
     setTimeout(() => {
       this.explosions = this.explosions.filter((x) => x !== explosion);
@@ -377,12 +379,16 @@ export class RaceService {
     }
 
     this.honkSoundPlaying = true;
-    await this.playSound('pinguHonk');
+    await this.playSound(this.urlService.urls.honkSound);
     this.honkSoundPlaying = false;
   }
 
   async playBoostSound() {
-    await this.playSound('boost');
+    await this.playSound(this.urlService.urls.boostSound);
+  }
+
+  async playKaboomSound() {
+    await this.playSound(this.urlService.urls.kaboomSound);
   }
 
   async playMotorSound() {
@@ -391,13 +397,13 @@ export class RaceService {
     }
 
     this.motorSoundPlaying = true;
-    await this.playSound('motor', 0.5);
+    await this.playSound(this.urlService.urls.motorSound, 0.5);
     this.motorSoundPlaying = false;
   }
 
-  async playSound(name: string, volume: number = 1) {
+  async playSound(url: string, volume: number = 1) {
     return new Promise((resolve) => {
-      var audio = new Audio(`assets/sounds/${name}.mp3`);
+      var audio = new Audio(url);
       audio.onended = resolve;
       audio.volume = volume;
       audio.play();

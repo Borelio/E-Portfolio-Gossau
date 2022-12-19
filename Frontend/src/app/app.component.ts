@@ -17,6 +17,7 @@ import { routerTransition } from './shared/routes';
 import { EasterEggService } from './shared/services/easter-egg.service';
 import { ImagePreloadService } from './shared/services/image-preload.service';
 import { SpecialEffectsService } from './shared/services/special-effects.service';
+import { UrlService } from './shared/services/url.service';
 
 @Component({
   selector: 'app-root',
@@ -52,6 +53,7 @@ export class AppComponent implements OnInit {
   constructor(
     private imagePreloadService: ImagePreloadService,
     private router: Router,
+    private urlService: UrlService,
     easterEggService: EasterEggService,
     specialEffectsService: SpecialEffectsService,
     rendererFactory: RendererFactory2,
@@ -75,5 +77,7 @@ export class AppComponent implements OnInit {
         subscription.unsubscribe();
       }
     });
+
+    this.urlService.loadOverride();
   }
 }
