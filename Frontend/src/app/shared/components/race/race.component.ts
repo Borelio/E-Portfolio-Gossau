@@ -17,6 +17,7 @@ import {
 import { io, Socket } from 'socket.io-client';
 import { CarColor } from './../../models/car';
 import { RaceService } from './../../services/race.service';
+import { UrlService } from './../../services/url.service';
 
 @Component({
   selector: 'app-race',
@@ -141,12 +142,16 @@ export class RaceComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private elementRef: ElementRef, raceService: RaceService) {
+  constructor(
+    private elementRef: ElementRef,
+    private urlService: UrlService,
+    raceService: RaceService
+  ) {
     this.raceService = raceService;
   }
 
   ngOnInit() {
-    this.socket = io('wss://gossau-be.nussmueller.dev');
+    this.socket = io(this.urlService.urls.websocket);
     // this.socket = io('ws://localhost:3000');
 
     this.socket.on('disconnect', () => {
