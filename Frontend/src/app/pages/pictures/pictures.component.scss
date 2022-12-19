@@ -13,6 +13,10 @@
     margin-bottom: 0;
     outline: none;
 
+    &.image3 {
+        aspect-ratio: 1262/1676;
+    }
+
     img {
         width: 100%;
         height: 100%;
