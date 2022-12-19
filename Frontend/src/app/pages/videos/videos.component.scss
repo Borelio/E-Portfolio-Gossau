@@ -1,3 +1,36 @@
 :host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
     width: 100%;
+}
+
+.video {
+    width: 1920px;
+    aspect-ratio: 16/9;
+}
+
+@media screen and ((max-width: 2000px) or (max-height: 1300px)) {
+    .video {
+        width: 1300px;
+    }
+}
+
+@media screen and ((max-width: 1400px) or (max-height: 1000px)) {
+    .video {
+        width: 900px;
+    }
+}
+
+@media screen and ((max-width: 900px) or (max-height: 750px)) {
+    .video {
+        width: 500px;
+    }
+}
+
+@media screen and ((max-width: 500px) or (max-height: 400px)) {
+    .video {
+        width: 300px;
+    }
 }
