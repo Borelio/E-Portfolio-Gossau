@@ -6,6 +6,7 @@
     flex-direction: row;
     align-items: center;
     padding: 20px;
+    height: 140px;
     width: 100%;
 }
 
@@ -15,6 +16,11 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+
+    &:not(:last-child) {
+        padding-right: 0;
+        margin-right: 20px;
+    }
 
     h1 {
         color: $PRIMARY-COLOR;
@@ -36,6 +42,9 @@
 }
 
 .logo {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     margin-left: auto;
     height: 100px;
     ::ng-deep {
@@ -63,6 +72,31 @@
 
 .navigation-icon {
     display: none;
+}
+
+@media screen and (max-height: 1000px) {
+    :host {
+        height: fit-content;
+    }
+
+    .route {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-height: $SMALLER-PADDING-QEURRY) {
+    :host {
+        height: fit-content;
+        padding: 10px;
+    }
+
+    .route {
+        padding: 5px;
+
+        &:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
 }
 
 @media screen and (max-width: $NAVIGATION-MOBILE-QUERRY) {

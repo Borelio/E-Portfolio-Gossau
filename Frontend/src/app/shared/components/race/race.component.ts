@@ -7,7 +7,6 @@ import {
 } from '@angular/animations';
 import {
   Component,
-  ElementRef,
   EventEmitter,
   HostListener,
   OnDestroy,
@@ -142,11 +141,7 @@ export class RaceComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(
-    private elementRef: ElementRef,
-    private urlService: UrlService,
-    raceService: RaceService
-  ) {
+  constructor(private urlService: UrlService, raceService: RaceService) {
     this.raceService = raceService;
   }
 
