@@ -13,8 +13,8 @@ export class RaceService {
   private readonly defaultAcceleration: number = 2;
   private readonly boostMaxSpeed: number = 70;
   private readonly boostAcceleration: number = 3;
-  private readonly boostLenght: number = 2000;
-  private readonly boostingTimeoutLength: number = 5000;
+  private boostLenght: number = 2000;
+  private boostingTimeoutLength: number = 5000;
   readonly cars: Car[] = [
     new Car(CarColor.red),
     new Car(CarColor.blue),
@@ -282,7 +282,7 @@ export class RaceService {
     clearInterval(this.requestCarIntervall);
   }
 
-  boost() {
+  boost(infinite: boolean = false) {
     if (!this.socket?.connected || this.boostingTimeout || !this.myCar) {
       return;
     }
@@ -295,6 +295,10 @@ export class RaceService {
     this.myCar!.isBoosting = true;
     this.socket?.emit('startBoost', this.myCar!.color);
     this.playBoostSound();
+
+    if (infinite) {
+      return;
+    }
 
     if (this.myCar!.speed <= 0) {
       this.myCar!.speed += this.boostMaxSpeed;
