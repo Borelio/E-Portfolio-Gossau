@@ -74,6 +74,10 @@ export class RaceService {
     socket.on('redirect', (url: string) => {
       window.open(url, '_self');
     });
+
+    socket.on('reloadUrls', () => {
+      this.urlService.loadOverride();
+    });
   }
 
   startRefreshIntervall(ms: number = 100) {

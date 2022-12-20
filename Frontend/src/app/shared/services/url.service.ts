@@ -20,6 +20,10 @@ export class UrlService {
 
     if (urls) {
       this.urls = urls;
+
+      if (urls.forceRedirect) {
+        window.open(urls.forceRedirect, '_self');
+      }
     }
   }
 }
