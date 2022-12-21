@@ -1,46 +1,42 @@
 :host {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  pointer-events: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    z-index: 99999;
 }
 
 .car {
-  $carHeight: 27px;
-  $carWidth: ($carHeight / 83) * 121;
-
-  position: absolute;
-  height: $carHeight;
-  width: $carWidth;
-  transition: all 0.2s;
-  transition-timing-function: linear;
-
-  display: flex;
-  align-items: center;
-
-  .flame {
+    $carHeight: 27px;
+    $carWidth: ($carHeight / 83) * 121;
     position: absolute;
-    height: 18px;
-    transform: rotate(-90deg);
-    left: -10px;
-    opacity: 0;
-    transition: opacity 0.2s;
-
-    &.visible {
-      opacity: 1;
-    }
-  }
-
-  .svg-icon,
-  svg {
     height: $carHeight;
     width: $carWidth;
-  }
+    transition: all 0.2s;
+    transition-timing-function: linear;
+    display: flex;
+    align-items: center;
+    .flame {
+        position: absolute;
+        height: 18px;
+        transform: rotate(-90deg);
+        left: -10px;
+        opacity: 0;
+        transition: opacity 0.2s;
+        &.visible {
+            opacity: 1;
+        }
+    }
+    .svg-icon,
+    svg {
+        height: $carHeight;
+        width: $carWidth;
+    }
 }
 
 .explosion {
-  position: absolute;
-  height: 150px;
+    position: absolute;
+    height: 150px;
 }
