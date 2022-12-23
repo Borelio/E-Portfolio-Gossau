@@ -70,6 +70,9 @@ app.post('/redirect/all', (req, res) => {
 app.get('/overrideUrls', (req, res) => {
     res.json({
         videoIframeCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/1Q8fG0TtVAY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+        mainImage: 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Crested_Tern_Tasmania_%28edit%29.jpg',
+        image3Edited: 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Crested_Tern_Tasmania_%28edit%29.jpg',
+        whyText: 'Because we can',
     }
     );
 });
