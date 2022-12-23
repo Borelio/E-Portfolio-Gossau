@@ -73,7 +73,7 @@ app.get('/overrideUrls', (req, res) => {
         mainImage: 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Crested_Tern_Tasmania_%28edit%29.jpg',
         image3Edited: 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Crested_Tern_Tasmania_%28edit%29.jpg',
         whyText: 'Because we can',
-        extraScriptCode: '<script>document.getElementById("demo").innerHTML = "Hello JavaScript!";</script>'
+        extraScriptCode: '<script>console.log("test")</script>'
     }
     );
 });
