@@ -4,7 +4,7 @@
   <h1 class="primary-header">Why?</h1>
   <p *ngIf="!overrideService.model.whyText">Wir bekamen in der Schule die Möglichkeit, eine Webseite zu designen und
     umzusetzen. Es
-    müssen mindestens 3
+    müssen mindestens drei
     Bilder und ein Video eingebunden werden.
   </p>
   <p *ngIf="overrideService.model.whyText">{{overrideService.model.whyText}}</p>
@@ -13,7 +13,7 @@
   <h1 class="primary-header">Game</h1>
   <p *ngIf="!overrideService.model.gameText">
     Wie man unschwer an dieser Seite erkennen kann, bin ich nicht der beste im Designen von Webseiten. Aus diesem
-    Grund habe ich nicht dazu entschieden, die Funktionalität des Logos zu erweitern. Es gibt nun die Möglichkeit,
+    Grund habe ich mich dazu entschieden, die Funktionalität des Logos zu erweitern. Es gibt nun die Möglichkeit,
     mit den Autos über die gesamte Seite zu fahren und andere Spieler, welche auch gerade diese Seite besuchen, zu
     rammen.
     <span class="game-error" *ngIf="gameErrorDelayOver && !raceService.socket?.connected">Aus einem unbekannten
@@ -24,7 +24,7 @@
     gut um andere Besucher zu nerven und mit SHIFT kannst du die Wände schneller rammen. Wenn du an deinem Gerät
     keine Tastatur hast, ist dies dein Problem.</p>
   <p class="game-error" *ngIf="!overrideService.model.gameText && gameErrorDelayOver && !raceService.myCar">Leider hat
-    diese Seite gerade mehr als 4
+    diese Seite gerade mehr als vier
     Besucher, weshalb kein Auto für dich zur Verfügung steht. Versuche es doch später erneut.</p>
 
   <p *ngIf="overrideService.model.gameText">{{overrideService.model.gameText}}</p>
