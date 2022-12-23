@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UrlService } from './url.service';
+import { OverrideService } from './override.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,13 +9,13 @@ export class ImagePreloadService {
 
   awaitHomeImage: boolean = false;
 
-  constructor(private urlService: UrlService) {
-    this.imageUrls.push(this.urlService.urls.image1);
-    this.imageUrls.push(this.urlService.urls.image1Edited);
-    this.imageUrls.push(this.urlService.urls.image2);
-    this.imageUrls.push(this.urlService.urls.image2Edited);
-    this.imageUrls.push(this.urlService.urls.image3);
-    this.imageUrls.push(this.urlService.urls.image3Edited);
+  constructor(private overrideService: OverrideService) {
+    this.imageUrls.push(this.overrideService.urls.image1);
+    this.imageUrls.push(this.overrideService.urls.image1Edited);
+    this.imageUrls.push(this.overrideService.urls.image2);
+    this.imageUrls.push(this.overrideService.urls.image2Edited);
+    this.imageUrls.push(this.overrideService.urls.image3);
+    this.imageUrls.push(this.overrideService.urls.image3Edited);
   }
 
   async loadImages(awaitHomeImage: boolean) {

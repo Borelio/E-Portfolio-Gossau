@@ -14,9 +14,9 @@ import {
   Output,
 } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
+import { OverrideService } from '../../services/override.service';
 import { CarColor } from './../../models/car';
 import { RaceService } from './../../services/race.service';
-import { UrlService } from './../../services/url.service';
 
 @Component({
   selector: 'app-race',
@@ -141,12 +141,15 @@ export class RaceComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private urlService: UrlService, raceService: RaceService) {
+  constructor(
+    private overrideService: OverrideService,
+    raceService: RaceService
+  ) {
     this.raceService = raceService;
   }
 
   ngOnInit() {
-    this.socket = io(this.urlService.urls.websocket);
+    this.socket = io(this.overrideService.urls.websocket);
 
     this.socket.on('disconnect', () => {
       this.socketDisconnected.emit();

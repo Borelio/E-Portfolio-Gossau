@@ -3,7 +3,7 @@ import { Socket } from 'socket.io-client';
 import { Car, CarColor } from '../models/car';
 import { Explosion } from '../models/explosion';
 import { KeyBoard } from '../models/keyBoard';
-import { UrlService } from './url.service';
+import { OverrideService } from './override.service';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +38,7 @@ export class RaceService {
   honkSoundPlaying: boolean = false;
   motorSoundPlaying: boolean = false;
 
-  constructor(private urlService: UrlService) {}
+  constructor(private overrideService: OverrideService) {}
 
   init(socket: Socket) {
     this.socket = socket;
@@ -76,7 +76,7 @@ export class RaceService {
     });
 
     socket.on('reloadUrls', () => {
-      this.urlService.loadOverride();
+      this.overrideService.loadOverride();
     });
   }
 
@@ -387,16 +387,16 @@ export class RaceService {
     }
 
     this.honkSoundPlaying = true;
-    await this.playSound(this.urlService.urls.honkSound);
+    await this.playSound(this.overrideService.urls.honkSound);
     this.honkSoundPlaying = false;
   }
 
   async playBoostSound() {
-    await this.playSound(this.urlService.urls.boostSound);
+    await this.playSound(this.overrideService.urls.boostSound);
   }
 
   async playKaboomSound() {
-    await this.playSound(this.urlService.urls.kaboomSound);
+    await this.playSound(this.overrideService.urls.kaboomSound);
   }
 
   async playMotorSound() {
@@ -405,7 +405,7 @@ export class RaceService {
     }
 
     this.motorSoundPlaying = true;
-    await this.playSound(this.urlService.urls.motorSound, 0.5);
+    await this.playSound(this.overrideService.urls.motorSound, 0.5);
     this.motorSoundPlaying = false;
   }
 

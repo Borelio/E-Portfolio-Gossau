@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UrlService } from './../../shared/services/url.service';
+import { OverrideService } from 'src/app/shared/services/override.service';
 
 @Component({
   selector: 'app-pictures',
@@ -7,9 +7,9 @@ import { UrlService } from './../../shared/services/url.service';
   styleUrls: ['./pictures.component.scss'],
 })
 export class PicturesComponent {
-  urlService: UrlService;
+  overrideService: OverrideService;
 
-  constructor(urlService: UrlService) {
-    this.urlService = urlService;
+  constructor(overrideService: OverrideService) {
+    this.overrideService = overrideService;
   }
 }

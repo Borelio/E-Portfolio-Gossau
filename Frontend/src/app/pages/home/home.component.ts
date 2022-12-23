@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OverrideService } from 'src/app/shared/services/override.service';
 import { ImagePreloadService } from './../../shared/services/image-preload.service';
 import { RaceService } from './../../shared/services/race.service';
-import { UrlService } from './../../shared/services/url.service';
 
 @Component({
   selector: 'app-home',
@@ -13,16 +13,16 @@ export class HomeComponent implements OnInit {
   imagePreloadService: ImagePreloadService;
   gameErrorDelay: number = 2000;
   gameErrorDelayOver: boolean = false;
-  urlService: UrlService;
+  overrideService: OverrideService;
 
   constructor(
     raceService: RaceService,
     imagePreloadService: ImagePreloadService,
-    urlService: UrlService
+    overrideService: OverrideService
   ) {
     this.raceService = raceService;
     this.imagePreloadService = imagePreloadService;
-    this.urlService = urlService;
+    this.overrideService = overrideService;
   }
 
   ngOnInit() {

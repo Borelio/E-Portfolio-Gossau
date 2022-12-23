@@ -6,7 +6,7 @@ import { OverrideUrls } from '../models/overrideUrls';
 @Injectable({
   providedIn: 'root',
 })
-export class UrlService {
+export class OverrideService {
   urls: OverrideUrls = new OverrideUrls();
 
   constructor(private httpClient: HttpClient) {}

@@ -16,8 +16,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { routerTransition } from './shared/routes';
 import { EasterEggService } from './shared/services/easter-egg.service';
 import { ImagePreloadService } from './shared/services/image-preload.service';
+import { OverrideService } from './shared/services/override.service';
 import { SpecialEffectsService } from './shared/services/special-effects.service';
-import { UrlService } from './shared/services/url.service';
 
 @Component({
   selector: 'app-root',
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
   constructor(
     private imagePreloadService: ImagePreloadService,
     private router: Router,
-    private urlService: UrlService,
+    private overrideService: OverrideService,
     easterEggService: EasterEggService,
     specialEffectsService: SpecialEffectsService,
     rendererFactory: RendererFactory2,
@@ -78,6 +78,6 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.urlService.loadOverride();
+    this.overrideService.loadOverride();
   }
 }
