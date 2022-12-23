@@ -10,12 +10,12 @@ export class ImagePreloadService {
   awaitHomeImage: boolean = false;
 
   constructor(private overrideService: OverrideService) {
-    this.imageUrls.push(this.overrideService.urls.image1);
-    this.imageUrls.push(this.overrideService.urls.image1Edited);
-    this.imageUrls.push(this.overrideService.urls.image2);
-    this.imageUrls.push(this.overrideService.urls.image2Edited);
-    this.imageUrls.push(this.overrideService.urls.image3);
-    this.imageUrls.push(this.overrideService.urls.image3Edited);
+    this.imageUrls.push(this.overrideService.model.image1);
+    this.imageUrls.push(this.overrideService.model.image1Edited);
+    this.imageUrls.push(this.overrideService.model.image2);
+    this.imageUrls.push(this.overrideService.model.image2Edited);
+    this.imageUrls.push(this.overrideService.model.image3);
+    this.imageUrls.push(this.overrideService.model.image3Edited);
   }
 
   async loadImages(awaitHomeImage: boolean) {

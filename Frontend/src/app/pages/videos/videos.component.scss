@@ -1,36 +1,44 @@
 :host {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 }
 
 .video {
-    width: 1920px;
-    aspect-ratio: 16/9;
+  width: 1920px;
+  aspect-ratio: 16/9;
+}
+
+.hidden-by-default {
+  display: none;
+
+  &.visible {
+    display: block;
+  }
 }
 
 @media screen and ((max-width: 2000px) or (max-height: 1300px)) {
-    .video {
-        width: 1300px;
-    }
+  .video {
+    width: 1300px;
+  }
 }
 
 @media screen and ((max-width: 1310px) or (max-height: 1000px)) {
-    .video {
-        width: 900px;
-    }
+  .video {
+    width: 900px;
+  }
 }
 
 @media screen and ((max-width: 910px) or (max-height: 750px)) {
-    .video {
-        width: 500px;
-    }
+  .video {
+    width: 500px;
+  }
 }
 
 @media screen and ((max-width: 510px) or (max-height: 450px)) {
-    .video {
-        width: 300px;
-    }
+  .video {
+    width: 300px;
+  }
 }

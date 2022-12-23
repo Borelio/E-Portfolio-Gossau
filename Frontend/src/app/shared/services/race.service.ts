@@ -387,16 +387,16 @@ export class RaceService {
     }
 
     this.honkSoundPlaying = true;
-    await this.playSound(this.overrideService.urls.honkSound);
+    await this.playSound(this.overrideService.model.honkSound);
     this.honkSoundPlaying = false;
   }
 
   async playBoostSound() {
-    await this.playSound(this.overrideService.urls.boostSound);
+    await this.playSound(this.overrideService.model.boostSound);
   }
 
   async playKaboomSound() {
-    await this.playSound(this.overrideService.urls.kaboomSound);
+    await this.playSound(this.overrideService.model.kaboomSound);
   }
 
   async playMotorSound() {
@@ -405,7 +405,7 @@ export class RaceService {
     }
 
     this.motorSoundPlaying = true;
-    await this.playSound(this.overrideService.urls.motorSound, 0.5);
+    await this.playSound(this.overrideService.model.motorSound, 0.5);
     this.motorSoundPlaying = false;
   }
 

@@ -1,3 +1,7 @@
-<iframe class="video" src="https://www.youtube.com/embed/KgNonC1k7zs" title="Gossau" frameborder="0"
+<iframe *ngIf="!overrideService.model.videoIframeCode" class="video" src="https://www.youtube.com/embed/KgNonC1k7zs"
+  title="Gossau" frameborder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
+
+<div id="video-holder" class="video hidden-by-default" [class.visible]="overrideService.model.videoIframeCode">
+</div>
