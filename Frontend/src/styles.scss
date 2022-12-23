@@ -14,12 +14,12 @@ body {
 * {
     font-family: sans-serif;
     box-sizing: border-box;
-    user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
 
 a {
     text-decoration: none;
+    user-select: none;
 }
 
 .primary-header {
