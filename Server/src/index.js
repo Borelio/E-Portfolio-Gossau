@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.Server(app);
+const cors = require('cors');
 const { Server } = require("socket.io");
 const { Car } = require('./car');
 const config = require("./config.json");
@@ -12,12 +13,7 @@ const io = new Server(server, {
     }
 });
 
-var corsOptions = {
-    origin: '*',
-    methods: "GET, POST"
-}
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 let possibleColors = ['blue', 'yellow', 'green', 'red'];
 let cars = [];
