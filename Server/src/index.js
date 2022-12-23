@@ -64,6 +64,13 @@ app.post('/redirect/all', (req, res) => {
     res.send('Okay');
 });
 
+app.get('/overrideUrls', (req, res) => {
+    res.json({
+        videoIframeCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/1Q8fG0TtVAY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+    }
+    );
+});
+
 server.listen(3000, () => {
     console.log('listening on *:3000');
 });
