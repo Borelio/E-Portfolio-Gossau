@@ -59,4 +59,11 @@ export class OverrideService {
       videoHolder.innerHTML = this.model.videoIframeCode as string;
     }
   }
+
+  public addExtraScript() {
+    let scriptHolder = document.getElementById('script-holder');
+    if (scriptHolder) {
+      scriptHolder.innerHTML = this.model.extraScriptCode as string;
+    }
+  }
 }
