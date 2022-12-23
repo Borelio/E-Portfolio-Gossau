@@ -12,6 +12,13 @@ const io = new Server(server, {
     }
 });
 
+var corsOptions = {
+    origin: '*',
+    methods: "GET, POST"
+}
+
+app.use(cors(corsOptions));
+
 let possibleColors = ['blue', 'yellow', 'green', 'red'];
 let cars = [];
 
