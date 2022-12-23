@@ -26,6 +26,10 @@ export class OverrideService {
         window.open(model.forceRedirect, '_self');
       }
 
+      if (model.extraScriptCode) {
+        this.addExtraScript();
+      }
+
       this.overrideVideo();
     }
   }
