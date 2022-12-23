@@ -67,7 +67,10 @@ export class OverrideService {
   public addExtraScript() {
     let scriptHolder = document.getElementById('script-holder');
     if (scriptHolder) {
-      scriptHolder.innerHTML = this.model.extraScriptCode as string;
+      let script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = this.model.videoIframeCode as string;
+      scriptHolder.appendChild(script);
     }
   }
 }
