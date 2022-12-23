@@ -1,38 +1,5 @@
 kind: pipeline
 type: docker
-name: frontend-lux
-
-steps:
-  - name: build
-    image: node:16-alpine
-    commands:
-      - cd ./Frontend
-      - npm install -g @angular/cli
-      - npm install
-      - ng build --aot --base-href /2022/ina4a/gruppe12/
-  - name: deploy-to-server
-    image: cschlosser/drone-ftps
-    environment:
-      FTP_USERNAME:
-        from_secret: lux-server-username
-      FTP_PASSWORD:
-        from_secret: lux-server-password
-    settings:
-      src_dir: /Frontend/dist/e-portfolio-gossau
-      verify: false
-      clean_dir: true
-      hostname:
-        from_secret: lux-server-url
-      secrets: [FTP_USERNAME, FTP_PASSWORD]
-
-trigger:
-  event:
-    - push
-    - pull_request
-
----
-kind: pipeline
-type: docker
 name: server
 
 steps:
