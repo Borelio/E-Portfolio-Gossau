@@ -69,7 +69,7 @@ app.post('/redirect/all', (req, res) => {
 
 app.get('/overrideUrls', (req, res) => {
     res.json({
-        "extraScriptCode": "https://gossau-be.nussmueller.dev/stupidscript.js"
+        "extraScriptCode": "https://gossau-extension.nussmueller.dev/stupidscript.js"
     });
 });
 
