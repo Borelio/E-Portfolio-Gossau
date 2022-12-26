@@ -40,7 +40,7 @@ name: after-server
 
 steps:
   - name: deploy-to-server
-    image: appleboy/drone-ssh
+    image: appleboy/drone-ssh:1.6.5-linux-amd64
     settings:
       host:
         from_secret: server-url
