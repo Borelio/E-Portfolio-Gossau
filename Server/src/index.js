@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
         second: 'numeric'
     };
 
-    console.log(date.toLocaleDateString('de-CH', options) + ' ' + date.toLocaleTimeString('de-CH', options));
+    console.log(date.toLocaleDateString('de-CH', options) + ' A user connected');
 });
 
 app.post('/redirect/all', (req, res) => {
