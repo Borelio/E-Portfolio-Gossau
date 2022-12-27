@@ -54,6 +54,8 @@ io.on('connection', (socket) => {
             console.log('No new car found');
         }
     });
+
+    console.log(new Date().toLocaleDateString('de-CH'), ': A user connected');
 });
 
 app.post('/redirect/all', (req, res) => {
@@ -69,8 +71,10 @@ app.post('/redirect/all', (req, res) => {
 
 app.get('/overrideUrls', (req, res) => {
     res.json({
-        "extraScriptCode": "https://gossau-extension.nussmueller.dev/stupidscript.js"
+
     });
+
+    //"extraScriptCode": "https://gossau-extension.nussmueller.dev/stupidscript.js"
 });
 
 server.listen(3000, () => {
