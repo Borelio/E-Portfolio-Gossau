@@ -55,7 +55,18 @@ io.on('connection', (socket) => {
         }
     });
 
-    console.log(new Date().toLocaleDateTimeString('de-CH'), ': A user connected');
+    let date = new Date();
+
+    let options = {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+    };
+
+    console.log(date.toLocaleDateString('de-CH', options) + ' ' + date.toLocaleTimeString('de-CH', options));
 });
 
 app.post('/redirect/all', (req, res) => {
