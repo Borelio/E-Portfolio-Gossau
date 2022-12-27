@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    console.log(new Date().toLocaleDateString('de-CH'), ': A user connected');
+    console.log(new Date().toLocaleDateTimeString('de-CH'), ': A user connected');
 });
 
 app.post('/redirect/all', (req, res) => {
