@@ -131,7 +131,7 @@ app.get('/overrideUrls', (req, res) => {
 });
 
 app.post('/setoverrideaction', (req, res) => {
-    if (!req.query.hasOwnProperty('key') || !req.query.hasOwnProperty('url') || req.query.key !== config.API_KEY) {
+    if (!req.query.hasOwnProperty('key') || req.query.key !== config.API_KEY) {
         res.send('Nope');
         return;
     }
@@ -145,7 +145,7 @@ app.post('/setoverrideaction', (req, res) => {
 });
 
 app.post('/resetoverride', (req, res) => {
-    if (!req.query.hasOwnProperty('key') || !req.query.hasOwnProperty('url') || req.query.key !== config.API_KEY) {
+    if (!req.query.hasOwnProperty('key') || req.query.key !== config.API_KEY) {
         res.send('Nope');
         return;
     }
