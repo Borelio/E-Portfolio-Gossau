@@ -140,6 +140,11 @@ app.post('/setoverrideaction', (req, res) => {
         setOverrideAction = req.query.nr;
         res.send('Okay');
     } else {
+        console.log('Querry not found');
+        console.log(req.query.hasOwnProperty('nr'));
+        console.log(req.query.nr);
+        console.log(Number.isInteger(req.query.nr));
+        console.log('----------------------------');
         res.send('Nope sry');
     }
 });
