@@ -95,13 +95,18 @@ const firstOverrideOption = {
     "videoIframeCode": '<iframe width="1280" height="720" src="https://www.youtube.com/embed/eEa3vDXatXg" title="Why are u gae????" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
 };
 const seccondOverrideOption = {
-    "mainImage": "assets/images/picture1_small.jpg",
-    "image1": "assets/images/picture1.jpg",
-    "image1Edited": "assets/images/picture1_edited.jpg",
-    "image2": "assets/images/picture2.jpg",
-    "image2Edited": "assets/images/picture2_edited.jpg",
-    "image3": "assets/images/picture3.jpg",
-    "image3Edited": "assets/images/picture3_edited.jpg"
+    "mainImage": "https://www.plantura.garden/wp-content/uploads/2017/03/baobabbaum.jpg",
+    "image1": "https://www.baumpflegeportal.de/wp-content/uploads/2016/05/160509_Starke-Baumtypen_Eiche-im-Seidengewand_03.jpg",
+    "image1Edited": "https://www.baumpflegeportal.de/wp-content/uploads/2016/05/160509_Starke-Baumtypen_Eiche-im-Seidengewand_02.jpg",
+    "image2": "https://www.lamodula.at/media/magefan_blog/esche-holz-baum-1_2_.jpeg",
+    "image2Edited": "https://www.plantura.garden/wp-content/uploads/2017/03/baobabbaum.jpg",
+    "image3": "https://images.squarespace-cdn.com/content/v1/60472827fe54df702f7eb4c7/1617090977550-OBXG6PPUEXFZE47TBMQB/was-kostet-ein-baum-sommerlinde-2-baumschule-oekoplant-wels.jpg",
+    "image3Edited": "https://www.waldwissen.net/assets/waldwirtschaft/schaden/trockenheit/wsl_baumartenwahl_trockenheit/wsl_baumartenwahl_trockenheit_waldfoehre.jpeg",
+    "whyText": "Bäum sind halt scho cool und de anderi Nico het das jo scho guet zeiget mit sinere Siite xD",
+    "gameText": "Leider han ich keis Game mit Bäum aber defür mit Autos",
+    "kaboomSound": "https://gossau-extension.nussmueller.dev/Kettensäge.mp3",
+    "honkSound": "https://gossau-extension.nussmueller.dev/BaumKaputt.mp3",
+    "videoIframeCode": '<iframe width="1280" height="960" src="https://www.youtube.com/embed/2GMU58e60x4" title="Hermann Schönbächler best of" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
 };
 const thirdOverrideOption = {
     "mainImage": "assets/images/picture1_small.jpg",
