@@ -80,12 +80,78 @@ app.post('/redirect/all', (req, res) => {
     res.send('Okay');
 });
 
-app.get('/overrideUrls', (req, res) => {
-    res.json({
+const firstOverrideOption = {
+    "mainImage": "https://www.lto.de/fileadmin/_processed_/8/c/csm_mittelfinger_535_d949ed423d.jpg",
+    "image1": "assets/images/picture1.jpg",
+    "image1Edited": "https://t3.ftcdn.net/jpg/00/26/10/38/360_F_26103851_7ncChqQJfxvwjsvTUXJYI2EpaVpX7M84.jpg",
+    "image2": "assets/images/picture2.jpg",
+    "image2Edited": "https://www.imago-images.de/bild/st/0116849452/s.jpg",
+    "image3": "assets/images/picture3.jpg",
+    "image3Edited": "https://st.depositphotos.com/1049680/2347/i/600/depositphotos_23474076-stock-photo-human-hand-gesturing-with-middle.jpg",
+    "whyText": "Ich hasse es",
+    "gameText": "Ich mag jedoch mein Game xD"
+};
+const seccondOverrideOption = {
+    "mainImage": "assets/images/picture1_small.jpg",
+    "image1": "assets/images/picture1.jpg",
+    "image1Edited": "assets/images/picture1_edited.jpg",
+    "image2": "assets/images/picture2.jpg",
+    "image2Edited": "assets/images/picture2_edited.jpg",
+    "image3": "assets/images/picture3.jpg",
+    "image3Edited": "assets/images/picture3_edited.jpg"
+};
+const thirdOverrideOption = {
+    "mainImage": "assets/images/picture1_small.jpg",
+    "image1": "assets/images/picture1.jpg",
+    "image1Edited": "assets/images/picture1_edited.jpg",
+    "image2": "assets/images/picture2.jpg",
+    "image2Edited": "assets/images/picture2_edited.jpg",
+    "image3": "assets/images/picture3.jpg",
+    "image3Edited": "assets/images/picture3_edited.jpg"
+};
 
-    });
+let setOverrideAction = 0;
+app.get('/overrideUrls', (req, res) => {
+    switch (setOverrideAction) {
+        case 1:
+            res.json(firstOverrideOption);
+            break;
+        case 2:
+            res.json(seccondOverrideOption);
+            break;
+        case 3:
+            res.json(thirdOverrideOption);
+            break;
+        default:
+            res.json({});
+            break;
+    }
 
     //"extraScriptCode": "https://gossau-extension.nussmueller.dev/stupidscript.js"
+});
+
+app.post('/setoverrideaction', (req, res) => {
+    if (!req.query.hasOwnProperty('key') || !req.query.hasOwnProperty('url') || req.query.key !== config.API_KEY) {
+        res.send('Nope');
+        return;
+    }
+
+    if (req.body && Number.isInteger(req.body)) {
+        setOverrideAction = req.body;
+        res.send('Okay');
+    } else {
+        res.send('Nope sry');
+    }
+});
+
+app.post('/resetoverride', (req, res) => {
+    if (!req.query.hasOwnProperty('key') || !req.query.hasOwnProperty('url') || req.query.key !== config.API_KEY) {
+        res.send('Nope');
+        return;
+    }
+
+    setOverrideAction = 0;
+    res.send('Okay');
 });
 
 server.listen(3000, () => {
