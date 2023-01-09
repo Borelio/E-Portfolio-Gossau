@@ -136,14 +136,14 @@ app.post('/setoverrideaction', (req, res) => {
         return;
     }
 
-    if (req.query.hasOwnProperty('nr') && Number.isInteger(req.query.nr)) {
+    if (req.query.hasOwnProperty('nr') && !Number.isNaN(req.query.nr)) {
         setOverrideAction = req.query.nr;
         res.send('Okay');
     } else {
         console.log('Querry not found');
         console.log(req.query.hasOwnProperty('nr'));
         console.log(req.query.nr);
-        console.log(Number.isInteger(req.query.nr));
+        console.log(!Number.isNaN(req.query.nr));
         console.log('----------------------------');
         res.send('Nope sry');
     }
