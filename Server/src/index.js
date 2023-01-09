@@ -89,7 +89,10 @@ const firstOverrideOption = {
     "image3": "assets/images/picture3.jpg",
     "image3Edited": "https://st.depositphotos.com/1049680/2347/i/600/depositphotos_23474076-stock-photo-human-hand-gesturing-with-middle.jpg",
     "whyText": "Ich hasse es",
-    "gameText": "Ich mag jedoch mein Game xD"
+    "gameText": "Ich mag jedoch mein Game xD",
+    "kaboomSound": "https://gossau-extension.nussmueller.dev/im-karton.mp3",
+    "honkSound": "https://gossau-extension.nussmueller.dev/aaaa.mp3",
+    "videoIframeCode": '<iframe width="1280" height="720" src="https://www.youtube.com/embed/eEa3vDXatXg" title="Why are u gae????" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
 };
 const seccondOverrideOption = {
     "mainImage": "assets/images/picture1_small.jpg",
