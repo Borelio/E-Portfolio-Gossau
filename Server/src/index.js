@@ -136,14 +136,10 @@ app.post('/setoverrideaction', (req, res) => {
         return;
     }
 
-    if (req.body && Number.isInteger(req.body)) {
-        setOverrideAction = req.body;
+    if (req.query.hasOwnProperty('nr') && Number.isInteger(req.query.nr)) {
+        setOverrideAction = req.query.nr;
         res.send('Okay');
     } else {
-        console.log('Invalid body');
-        console.log(req.body);
-        console.log(Number.isInteger(req.body));
-        console.log('--------------');
         res.send('Nope sry');
     }
 });
