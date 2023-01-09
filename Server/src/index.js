@@ -138,6 +138,7 @@ app.post('/setoverrideaction', (req, res) => {
 
     if (req.query.hasOwnProperty('nr') && +req.query.nr > 0) {
         setOverrideAction = +req.query.nr;
+        io.emit('reloadUrls');
         res.send('Okay');
     } else {
         res.send('Nope sry');
@@ -151,6 +152,7 @@ app.post('/resetoverride', (req, res) => {
     }
 
     setOverrideAction = 0;
+    io.emit('reloadUrls');
     res.send('Okay');
 });
 
