@@ -140,6 +140,10 @@ app.post('/setoverrideaction', (req, res) => {
         setOverrideAction = req.body;
         res.send('Okay');
     } else {
+        console.log('Invalid body');
+        console.log(req.body);
+        console.log(Number.isInteger(req.body));
+        console.log('--------------');
         res.send('Nope sry');
     }
 });
