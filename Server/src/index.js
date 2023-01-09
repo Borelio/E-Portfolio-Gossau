@@ -136,7 +136,7 @@ app.post('/setoverrideaction', (req, res) => {
         return;
     }
 
-    if (req.query.hasOwnProperty('nr') && +isNaNreq.query.nr > 0) {
+    if (req.query.hasOwnProperty('nr') && +req.query.nr > 0) {
         setOverrideAction = req.query.nr;
         res.send('Okay');
     } else {
