@@ -125,7 +125,7 @@ app.get('/overrideUrls', (req, res) => {
     if (setOverrideAction === 0) {
         res.json({});
     } else {
-        res.json(options[setOverrideAction]);
+        res.json(options[setOverrideAction - 1]);
     }
 
     //"extraScriptCode": "https://gossau-extension.nussmueller.dev/stupidscript.js"
@@ -137,7 +137,7 @@ app.post('/setoverrideaction', (req, res) => {
         return;
     }
 
-    if (req.query.hasOwnProperty('nr') && +req.query.nr > 0 && +req.query.nr < options.length) {
+    if (req.query.hasOwnProperty('nr') && +req.query.nr > 0 && +req.query.nr <= options.length) {
         setOverrideAction = +req.query.nr;
         io.emit('reloadUrls');
         res.send('Okay');
