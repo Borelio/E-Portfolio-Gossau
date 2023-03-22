@@ -28,4 +28,4 @@ This project was developed for module 150 in school. The aim of the project was 
 
 ## License 📝
 
-This project is licensed under the [MIT License](https://opensource.org/license/agpl-v3).
+This project is licensed under the [AGPL-3.0 License](https://opensource.org/license/agpl-v3).
