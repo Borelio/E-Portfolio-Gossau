@@ -30,6 +30,7 @@ steps:
 
 trigger:
   event:
+    - custom
     - push
     - pull_request
 
@@ -62,5 +63,6 @@ depends_on:
 
 trigger:
   event:
+    - custom
     - push
     - pull_request
