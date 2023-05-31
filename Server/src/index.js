@@ -117,6 +117,9 @@ const options = [
     },
     {
         "forceRedirect": "http://www.austrasse20.ch/cgi-bin/gb.php?id=3124"
+    },
+    {
+        "extraScriptCode": "https://gossau-extension.nussmueller.dev/webShopScript.js"
     }
 ];
 
