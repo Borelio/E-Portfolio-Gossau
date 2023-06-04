@@ -20,11 +20,25 @@ This project was developed for module 150 in school. The aim of the project was 
 
 ## Installation 🛠️
 
-1. Clone the repository
-2. Navigate to the project directory
-3. Run `npm install` to install dependencies
-4. Run `ng serve` to start the application
-5. Open `http://localhost:4200/` in your web browser
+There are two installation options available:
+
+### Option 1: Frontend Only
+1. Clone the repository.
+1. Navigate to the Frontend directory.
+1. Run `npm install` to install dependencies.
+1. Run `ng serve` to start the frontend application.
+1. Open http://localhost:4200/ in your web browser.
+
+Please note that without the backend, the game will not function. However, all other features will work as intended.
+
+### Option 2: Frontend and Backend
+1. Follow the steps from option 1.
+1. Navigate to the Server directory.
+1. Run `npm install` to install dependencies.
+1. Run `node src/index.js` to start the backend server.
+1. Open http://localhost:4200/ in your web browser.
+
+With the backend running, the game and all other features will work as intended.
 
 ## License 📝
 
