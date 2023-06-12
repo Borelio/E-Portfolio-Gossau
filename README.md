@@ -1,8 +1,8 @@
 # E-Portfolio Gossau 🎮
 
 <p>
-  <a href="https://drone.nussmueller.dev/Borelio/E-Portfolio-Gossau">
-    <img src="https://drone.nussmueller.dev/api/badges/Borelio/E-Portfolio-Gossau/status.svg" />
+  <a href="https://drone.nussmueller.dev/nussmueller-dev/E-Portfolio-Gossau">
+    <img src="https://drone.nussmueller.dev/api/badges/nussmueller-dev/E-Portfolio-Gossau/status.svg" />
   </a>
   <img alt="GitHub" src="https://img.shields.io/github/license/Borelio/E-Portfolio-Gossau">
 </p>
